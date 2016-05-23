@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package persistence.DAO;
 
 import VO.Aluno;
 import java.util.ArrayList;
 
 /**
  *
- * @author lucasfernandes
+ * @author viniciuscustodio
  */
-public class AlunoPersistence {
+public interface AlunoPersDAO {
+    public abstract ArrayList<Aluno> searchAluno(Aluno aluno);
 
-    public static ArrayList<Aluno> searchAluno(Aluno aluno) {
-        return null;
-    }
-    
 }

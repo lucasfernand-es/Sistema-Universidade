@@ -7,7 +7,8 @@ package controller;
 
 import VO.Aluno;
 import java.util.ArrayList;
-import persistence.AlunoPersistence;
+import persistence.DAO.DAOFactory;
+import persistence.DAO.Mysql.AlunoPersDAOMySQL;
 
 /**
  *
@@ -18,8 +19,7 @@ public class AlunoController {
     public static ArrayList<Aluno> searchAluno(Aluno aluno) {
         
         
-        ArrayList<Aluno> newListAluno = AlunoPersistence.searchAluno(aluno);
-        
+        ArrayList<Aluno> newListAluno = DAOFactory.buscarInstancia().getAlunoPersDAO().searchAluno(aluno);        
         return newListAluno;
     }
     
