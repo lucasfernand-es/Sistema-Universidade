@@ -1,10 +1,15 @@
+package view;
 
+
+import VO.Aluno;
+import controller.AlunoController;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -300,7 +305,13 @@ public class BuscaAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPesquisarActionPerformed
-
+        
+        Aluno aluno = new Aluno();
+        aluno.setNome( this.tAluno.getText() );
+        
+        
+        ArrayList<Aluno> alunos = AlunoController.searchAluno(aluno);
+        
         try {
 
             File arq = new File("");
@@ -315,6 +326,7 @@ public class BuscaAluno extends javax.swing.JFrame {
 
             cbAluno.removeAllItems();
 
+            
             while (consulta.next()) {
 
                 cbAluno.addItem(consulta.getString("nome"));
@@ -381,13 +393,10 @@ public class BuscaAluno extends javax.swing.JFrame {
 
             conexao.close();
 
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
 
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
-        } catch (SQLException ex) {
-
-            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_bBuscarActionPerformed
@@ -451,10 +460,8 @@ public class BuscaAluno extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscaAluno().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new BuscaAluno().setVisible(true);
         });
     }
 
