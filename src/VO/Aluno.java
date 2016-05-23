@@ -15,7 +15,7 @@ public class Aluno {
     private String ingresso;
     private int periodo;
     private String situacao;
-    private Curso curso;
+    private String nome_curso;
 
     /**
      * @return the ra
@@ -87,17 +87,18 @@ public class Aluno {
         this.situacao = situacao;
     }
 
+
     /**
-     * @return the curso
+     * @return the nome_curso
      */
-    public Curso getCurso() {
-        return curso;
+    public String getNome_curso() {
+        return nome_curso;
     }
 
     /**
-     * @param curso the curso to set
+     * @param nome_curso the nome_curso to set
      */
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setNome_curso(String nome_curso) {
+        this.nome_curso = nome_curso;
     }
 }
