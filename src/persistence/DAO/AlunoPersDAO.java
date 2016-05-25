@@ -6,13 +6,13 @@
 package persistence.DAO;
 
 import VO.Aluno;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author viniciuscustodio
  */
 public interface AlunoPersDAO {
-    public abstract ArrayList<Aluno> searchAluno(Aluno aluno);
+    public abstract List<Aluno> searchAluno(Aluno aluno, int type);
 
 }

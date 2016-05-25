@@ -20,10 +20,25 @@ import persistence.DAO.AlunoPersDAO;
 public class AlunoPersDAOMySQL implements AlunoPersDAO {
 
     @Override
-    public ArrayList<Aluno> searchAluno(Aluno aluno) {
+    public List<Aluno> searchAluno(Aluno aluno, int type) {
         
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        String qString = "SELECT e from ALUNO e";
+        String qString = null;
+        switch(type)
+        {
+            case 1: 
+                qString = "SELECT a FROM Aluno a WHERE a.nome like '%" + aluno.getNome() +"%'";
+                break;
+            case 2: 
+                qString = "SELECT a FROM Aluno a WHERE a.nome = '" + aluno.getNome() +"'";
+                break;
+            default: 
+                qString = "";
+                break;
+        }
+        
+        
+  
         TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
         List<Aluno> results = null;
 
@@ -35,7 +50,9 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
         } finally {
             em.close();
         }
-        return (ArrayList<Aluno>) results;
+        return results;
+        
+
         
        // MysqlDAOFactory.getMysqlEntityFactory()
        //return null;

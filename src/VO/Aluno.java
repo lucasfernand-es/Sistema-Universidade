@@ -5,18 +5,37 @@
  */
 package VO;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author lucasfernandes
  */
-public class Aluno {
+@Entity
+public class Aluno implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id_aluno;
     private int ra;
     private String nome;
     private String ingresso;
     private int periodo;
+    private float coeficiente;
     private String situacao;
     private String nome_curso;
+    private String turno;
 
+    
+    
+    @Override
+    public String toString(){
+        return this.getNome() + " - " + this.getRa();
+    }
+    
     /**
      * @return the ra
      */
@@ -74,6 +93,20 @@ public class Aluno {
     }
 
     /**
+     * @return the coeficiente
+     */
+    public float getCoeficiente() {
+        return coeficiente;
+    }
+
+    /**
+     * @param coeficiente the coeficiente to set
+     */
+    public void setCoeficiente(float coeficiente) {
+        this.coeficiente = coeficiente;
+    }
+
+    /**
      * @return the situacao
      */
     public String getSituacao() {
@@ -86,7 +119,6 @@ public class Aluno {
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
-
 
     /**
      * @return the nome_curso
@@ -101,4 +133,34 @@ public class Aluno {
     public void setNome_curso(String nome_curso) {
         this.nome_curso = nome_curso;
     }
+
+    /**
+     * @return the id_aluno
+     */
+    public long getId_aluno() {
+        return id_aluno;
+    }
+
+    /**
+     * @param id_aluno the id_aluno to set
+     */
+    public void setId_aluno(long id_aluno) {
+        this.id_aluno = id_aluno;
+    }
+
+    /**
+     * @return the turno
+     */
+    public String getTurno() {
+        return turno;
+    }
+
+    /**
+     * @param turno the turno to set
+     */
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+
 }

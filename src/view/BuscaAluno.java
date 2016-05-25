@@ -2,14 +2,11 @@ package view;
 
 
 import VO.Aluno;
+import VO.Aluno_Disciplina;
+import VO.Disciplina;
 import controller.AlunoController;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import controller.DisciplinaController;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -24,16 +21,30 @@ import javax.swing.JOptionPane;
  */
 public class BuscaAluno extends javax.swing.JFrame {
 
-    DefaultListModel modelo;
+    private static BuscaAluno BuscaAluno;
+    
+    private DefaultListModel modelo;
+    
+    private List<Aluno> alunos = null;
 
     /**
      * Creates new form BuscaAluno
      */
+    
+    public static void createBuscaAluno(){
+        if(BuscaAluno == null){
+            BuscaAluno = new BuscaAluno();
+        }
+        BuscaAluno.setVisible(true);
+        
+    }
     public BuscaAluno() {
         initComponents();
         setLocationRelativeTo(null);
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,6 +115,11 @@ public class BuscaAluno extends javax.swing.JFrame {
         lPesquisaAnoSemestre.setText("Ano/Semestre:");
 
         cbAnoSemestre.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "2008/1", "2008/2", "2009/1", "2009/2", "2010/1", "2010/2", "2011/1", "2011/2", "2012/1", "2012/2", "2013/1", "2013/2", "2014/1", "2014/2", "2015/1", "2015/2", "2016/1" }));
+        cbAnoSemestre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAnoSemestreActionPerformed(evt);
+            }
+        });
 
         bBuscar.setText("Buscar");
         bBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -310,13 +326,25 @@ public class BuscaAluno extends javax.swing.JFrame {
         aluno.setNome( this.tAluno.getText() );
         
         
-        ArrayList<Aluno> alunos = AlunoController.searchAluno(aluno);
+        try{
+            alunos = AlunoController.searchAluno(aluno, 1);
         
-        for(Aluno a: alunos)
-        {
-            System.out.println(a);
+            cbAluno.removeAllItems();
+
+            for(Aluno alunoVO: alunos)
+            {
+                //System.out.println(alunoVO);
+                cbAluno.addItem(alunoVO.getNome());
+            }
+        }
+        catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
         }
         
+        
+        /*
         try {
 
             File arq = new File("");
@@ -347,13 +375,54 @@ public class BuscaAluno extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
+        */
     }//GEN-LAST:event_bPesquisarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
 
+        
+        Aluno_Disciplina aluno_Disciplina = new Aluno_Disciplina();
+        aluno_Disciplina.setAno_semestre( this.cbAnoSemestre.getSelectedItem().toString() );
+        
+        Aluno aluno = new Aluno();
+        aluno.setNome( this.cbAluno.getSelectedItem().toString() );
+        if ( alunos != null ) { // Capturar o RA do aluno 
+            aluno.setRa( alunos.get( this.cbAluno.getSelectedIndex() ).getRa() );
+        }
+        aluno_Disciplina.setAluno(aluno);
+        
         try {
+            List<Disciplina> disciplinas = DisciplinaController.searchDisciplina(aluno_Disciplina);
+        
+            modelo.removeAllElements();
+            for(Disciplina disciplinaVO : disciplinas)
+            {
+                //System.out.println(disciplinaVO);
+                modelo.addElement(disciplinaVO.getNome());
+            }
+            
+            List<Aluno> selectAluno = AlunoController.searchAluno(aluno, 2);
+            
+            for(Aluno alunoVO: selectAluno)
+            {
+                this.lRAAluno.setText(String.valueOf( alunoVO.getRa() )  );
+                this.lNomeAluno.setText( alunoVO.getNome() );
+                this.lCursoAluno.setText( alunoVO.getNome_curso() );
+                this.lTurnoAluno.setText( alunoVO.getTurno() );
+                this.lSituacaoAluno.setText( alunoVO.getSituacao() );
+                this.lPeriodoAluno.setText(String.valueOf( alunoVO.getPeriodo() ) );
+                this.lCoeficienteAluno.setText(String.valueOf( alunoVO.getCoeficiente() ));
+            }
+        }
+        catch (Exception ex) {
 
+            JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+
+        }
+        
+        /*
+        
+        try {
             File arq = new File("");
             String diretorio = arq.getAbsolutePath() + "//DataBase//UNIVERSIDADE.FDB";
 
@@ -403,6 +472,7 @@ public class BuscaAluno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 
         }
+        */
 
     }//GEN-LAST:event_bBuscarActionPerformed
 
@@ -436,6 +506,10 @@ public class BuscaAluno extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_mSairActionPerformed
+
+    private void cbAnoSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAnoSemestreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAnoSemestreActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,10 +5,14 @@
  */
 package persistence.DAO;
 
+import VO.Aluno_Disciplina;
+import VO.Disciplina;
+import java.util.List;
+
 /**
  *
  * @author viniciuscustodio
  */
 public interface DisciplinaPersDAO {
-    
+    public abstract List<Disciplina> searchDisciplina(Aluno_Disciplina aluno_Disciplina);
 }

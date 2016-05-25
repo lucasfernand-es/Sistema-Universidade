@@ -24,7 +24,7 @@ public class MysqlDAOFactory extends DAOFactory{
 
     
     private static final EntityManagerFactory emf
-            = Persistence.createEntityManagerFactory("MySQLUniveristy");
+            = Persistence.createEntityManagerFactory("MySQLUniversity");
     
     public MysqlDAOFactory()
     {

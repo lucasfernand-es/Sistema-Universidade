@@ -5,29 +5,40 @@
  */
 package VO;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author lucasfernandes
  */
-public class Disciplina {
-    private int id_disciplina;
+@Entity
+public class Disciplina implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id_disciplina;
     private String nome;
     private int periodo;
     private int carga_horaria;
     private String ementa;
-    private Professor professor;
+    private long id_professor;
+    
 
     /**
      * @return the id_disciplina
      */
-    public int getId_disciplina() {
+    public long getId_disciplina() {
         return id_disciplina;
     }
 
     /**
      * @param id_disciplina the id_disciplina to set
      */
-    public void setId_disciplina(int id_disciplina) {
+    public void setId_disciplina(long id_disciplina) {
         this.id_disciplina = id_disciplina;
     }
 
@@ -88,17 +99,18 @@ public class Disciplina {
     }
 
     /**
-     * @return the professor
+     * @return the id_professor
      */
-    public Professor getProfessor() {
-        return professor;
+    public long getId_professor() {
+        return id_professor;
     }
 
     /**
-     * @param professor the professor to set
+     * @param id_professor the id_professor to set
      */
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setId_professor(long id_professor) {
+        this.id_professor = id_professor;
     }
-    
+
+
 }
