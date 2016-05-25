@@ -42,7 +42,7 @@ public class Sobre extends javax.swing.JDialog {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/portal_academico2.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/portal_academico2.png"))); // NOI18N
         jLabel1.setText("    Consulta Disciplinas");
 
         jLabel2.setText("© 2016  - Universidade Tecnológica Federal do Paraná");

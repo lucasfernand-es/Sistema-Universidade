@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class BuscaAluno extends javax.swing.JFrame {
 
-    private static BuscaAluno BuscaAluno;
+    private static BuscaAluno BuscaAluno = null;
     
     private DefaultListModel modelo;
     
