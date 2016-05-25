@@ -312,6 +312,11 @@ public class BuscaAluno extends javax.swing.JFrame {
         
         ArrayList<Aluno> alunos = AlunoController.searchAluno(aluno);
         
+        for(Aluno a: alunos)
+        {
+            System.out.println(a);
+        }
+        
         try {
 
             File arq = new File("");

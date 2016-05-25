@@ -5,6 +5,9 @@
  */
 package persistence.DAO.Mysql;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistence.DAO.AlunoPersDAO;
@@ -22,6 +25,11 @@ public class MysqlDAOFactory extends DAOFactory{
     
     private static final EntityManagerFactory emf
             = Persistence.createEntityManagerFactory("MySQLUniveristy");
+    
+    public MysqlDAOFactory()
+    {
+        
+    }
 
     public static EntityManagerFactory getMysqlEntityFactory() {
         return emf;
@@ -45,6 +53,36 @@ public class MysqlDAOFactory extends DAOFactory{
     @Override
     public DisciplinaPersDAO getDisciplinaPersDAO() {
         return new DisciplinaPersDAOMySQL();
+    }
+    
+    public static void closeStatement(Statement s) {
+        try {
+            if (s != null) {
+                s.close();
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void closePreparedStatement(Statement ps) {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void closeResultSet(ResultSet rs) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
     }
 
     

@@ -8,7 +8,6 @@ package controller;
 import VO.Aluno;
 import java.util.ArrayList;
 import persistence.DAO.DAOFactory;
-import persistence.DAO.Mysql.AlunoPersDAOMySQL;
 
 /**
  *
