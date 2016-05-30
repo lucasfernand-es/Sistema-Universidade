@@ -35,7 +35,7 @@ public class DisciplinaPersDAOMySQL implements DisciplinaPersDAO{
                         + ")";
         //System.out.println(qString);
         TypedQuery<Disciplina> q = em.createQuery(qString, Disciplina.class);
-        List<Disciplina> results = null;
+        List<Disciplina> results = null; //teste
 
         try {
             results = q.getResultList();

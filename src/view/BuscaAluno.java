@@ -401,18 +401,18 @@ public class BuscaAluno extends javax.swing.JFrame {
                 modelo.addElement(disciplinaVO.getNome());
             }
             
-            List<Aluno> selectAluno = AlunoController.searchAluno(aluno, 2);
+            //List<Aluno> selectAluno = AlunoController.searchAluno(aluno, 2);
             
-            for(Aluno alunoVO: selectAluno)
-            {
-                this.lRAAluno.setText(String.valueOf( alunoVO.getRa() )  );
-                this.lNomeAluno.setText( alunoVO.getNome() );
-                this.lCursoAluno.setText( alunoVO.getNome_curso() );
-                this.lTurnoAluno.setText( alunoVO.getTurno() );
-                this.lSituacaoAluno.setText( alunoVO.getSituacao() );
-                this.lPeriodoAluno.setText(String.valueOf( alunoVO.getPeriodo() ) );
-                this.lCoeficienteAluno.setText(String.valueOf( alunoVO.getCoeficiente() ));
-            }
+            
+            Aluno alunoVO = alunos.get( this.cbAluno.getSelectedIndex() );
+            this.lRAAluno.setText(String.valueOf( alunoVO.getRa() )  );
+            this.lNomeAluno.setText( alunoVO.getNome() );
+            this.lCursoAluno.setText( alunoVO.getNome_curso() );
+            this.lTurnoAluno.setText( alunoVO.getTurno() );
+            this.lSituacaoAluno.setText( alunoVO.getSituacao() );
+            this.lPeriodoAluno.setText(String.valueOf( alunoVO.getPeriodo() ) );
+            this.lCoeficienteAluno.setText(String.valueOf( alunoVO.getCoeficiente() ));
+            
         }
         catch (Exception ex) {
 
