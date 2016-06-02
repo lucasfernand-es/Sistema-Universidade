@@ -15,4 +15,8 @@ import java.util.List;
 public interface AlunoPersDAO {
     public abstract List<Aluno> searchAluno(Aluno aluno, int type);
 
+    public abstract List<Aluno> searchAluno();
+
+    public abstract boolean registryAluno(Aluno aluno);
+
 }

@@ -6,10 +6,12 @@
 package VO;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -22,12 +24,14 @@ public class Aluno implements Serializable {
     private long id_aluno;
     private int ra;
     private String nome;
-    private String ingresso;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date ingresso;
     private int periodo;
     private float coeficiente;
     private String situacao;
     private String nome_curso;
     private String turno;
+    private String telefone;
 
     
     
@@ -67,14 +71,14 @@ public class Aluno implements Serializable {
     /**
      * @return the ingresso
      */
-    public String getIngresso() {
+    public Date getIngresso() {
         return ingresso;
     }
 
     /**
      * @param ingresso the ingresso to set
      */
-    public void setIngresso(String ingresso) {
+    public void setIngresso(Date ingresso) {
         this.ingresso = ingresso;
     }
 
@@ -160,6 +164,20 @@ public class Aluno implements Serializable {
      */
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    /**
+     * @return the telefone
+     */
+    public String getTelefone() {
+        return telefone;
+    }
+
+    /**
+     * @param telefone the telefone to set
+     */
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
 

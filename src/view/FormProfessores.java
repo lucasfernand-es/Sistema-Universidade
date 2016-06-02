@@ -35,6 +35,7 @@ public class FormProfessores extends javax.swing.JFrame {
         }
         return mask;
     }
+    
     private String dateFormat(Date date){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(date);

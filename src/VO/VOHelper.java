@@ -24,4 +24,19 @@ public class VOHelper {
         
         return p;
     }
+
+    public static Aluno createAlunoVO(String ra, String periodo, String curso, String nome, String coeficiente, String turno, Date dateIngresso, String situacao) {
+        Aluno aluno = new Aluno();
+        
+        aluno.setRa(Integer.parseInt(ra));
+        aluno.setPeriodo(Integer.parseInt(periodo));
+        aluno.setNome_curso(curso);
+        aluno.setNome(nome);
+        aluno.setCoeficiente(Float.parseFloat(coeficiente));
+        aluno.setTurno(turno);
+        aluno.setIngresso(dateIngresso);
+        aluno.setSituacao(situacao);
+        
+        return aluno;
+    }
 }
