@@ -19,4 +19,8 @@ public interface AlunoPersDAO {
 
     public abstract boolean registryAluno(Aluno aluno);
 
+    public abstract boolean updateAluno(Aluno aluno);
+
+    public abstract boolean deleteAluno(Aluno aluno);
+
 }

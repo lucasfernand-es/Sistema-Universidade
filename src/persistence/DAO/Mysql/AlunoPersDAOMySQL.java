@@ -22,24 +22,21 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
 
     @Override
     public List<Aluno> searchAluno(Aluno aluno, int type) {
-        
+
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         String qString = null;
-        switch(type)
-        {
-            case 1: 
-                qString = "SELECT a FROM Aluno a WHERE a.nome like '%" + aluno.getNome() +"%'";
+        switch (type) {
+            case 1:
+                qString = "SELECT a FROM Aluno a WHERE a.nome like '%" + aluno.getNome() + "%'";
                 break;
-            case 2: 
-                qString = "SELECT a FROM Aluno a WHERE a.nome = '" + aluno.getNome() +"'";
+            case 2:
+                qString = "SELECT a FROM Aluno a WHERE a.nome = '" + aluno.getNome() + "'";
                 break;
-            default: 
+            default:
                 qString = "";
                 break;
         }
-        
-        
-  
+
         TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
         List<Aluno> results = null;
 
@@ -53,12 +50,13 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
         }
         return results;
     }
-    public List<Aluno> searchAluno(){
+
+    public List<Aluno> searchAluno() {
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         String qString = "SELECT a from Aluno a";
         TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
         List<Aluno> results = null;
-        
+
         try {
             results = q.getResultList();
         } catch (NoResultException ex) {
@@ -86,6 +84,41 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
         return true;
     }
 
- 
-    
+    public boolean updateAluno(Aluno aluno) {
+        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.merge(aluno);
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteAluno(Aluno aluno) {
+        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        
+        try {
+            
+            Aluno queryAluno = em.find(Aluno.class, aluno.getIdaluno());
+            em.remove(queryAluno);
+            
+            trans.commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        } finally {
+            em.close();
+        }
+        return true;
+    }
+
 }

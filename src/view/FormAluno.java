@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author viniciuscustodio
@@ -28,8 +27,10 @@ public class FormAluno extends javax.swing.JFrame {
      */
     public FormAluno() {
         initComponents();
+        populateTable();
     }
- private void populateTable(){
+
+    private void populateTable() {
         this.alunos = alunoController.searchAlunos();
 
         // Atualizando a tabela
@@ -74,6 +75,8 @@ public class FormAluno extends javax.swing.JFrame {
         jbUpdate = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jcbSituacao = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jtTelefone = new javax.swing.JTextField();
         jbDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -157,29 +160,38 @@ public class FormAluno extends javax.swing.JFrame {
 
         jcbSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regular", "Afastado para Estudos no Exterior", "Desistente", "Matrícula Trancada" }));
 
+        jLabel5.setText("Telefone:");
+
+        jtTelefone.setText("(42) 8425-9609");
+
         javax.swing.GroupLayout jPAlunoLayout = new javax.swing.GroupLayout(jPAluno);
         jPAluno.setLayout(jPAlunoLayout);
         jPAlunoLayout.setHorizontalGroup(
             jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPAlunoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPAlunoLayout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jDateIngresso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPAlunoLayout.createSequentialGroup()
+                            .addComponent(jlAcademicRegistry)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtAcademicRegistry, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                            .addComponent(jlPeriod)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jcbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPAlunoLayout.createSequentialGroup()
+                            .addComponent(jlName)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtNome)))
                     .addGroup(jPAlunoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateIngresso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPAlunoLayout.createSequentialGroup()
-                        .addComponent(jlAcademicRegistry)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtAcademicRegistry, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(jlPeriod)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPAlunoLayout.createSequentialGroup()
-                        .addComponent(jlName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtNome)))
+                        .addComponent(jtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPAlunoLayout.createSequentialGroup()
@@ -205,7 +217,7 @@ public class FormAluno extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 141, Short.MAX_VALUE))))
         );
         jPAlunoLayout.setVerticalGroup(
             jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +248,9 @@ public class FormAluno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbUpdate)
-                    .addComponent(jbRegister))
+                    .addComponent(jbRegister)
+                    .addComponent(jLabel5)
+                    .addComponent(jtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -278,26 +292,52 @@ public class FormAluno extends javax.swing.JFrame {
 
     private void jbRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegisterActionPerformed
         Aluno aluno = VOHelper.createAlunoVO(jtAcademicRegistry.getText(),
-                                             jcbPeriodo.getSelectedItem().toString(),
-                                             jcbCurso.getSelectedItem().toString(),
-                                             jtNome.getText(),
-                                             jtfCoeficiente.getText(),
-                                             jcbTurno.getSelectedItem().toString(),
-                                             jDateIngresso.getDate(),
-                                             jcbSituacao.getSelectedItem().toString());
-        alunoController.registrarAluno(aluno);
+                jcbPeriodo.getSelectedItem().toString(),
+                jcbCurso.getSelectedItem().toString(),
+                jtNome.getText(),
+                jtfCoeficiente.getText(),
+                jcbTurno.getSelectedItem().toString(),
+                jDateIngresso.getDate(),
+                jcbSituacao.getSelectedItem().toString(),
+                jtTelefone.getText());
+        showMessage(alunoController.registrarAluno(aluno), "insert");
     }//GEN-LAST:event_jbRegisterActionPerformed
 
     private void jTableAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAlunosMouseClicked
+        this.selectedAluno = alunos.get(jTableAlunos.getSelectedRow());
+
+        jtAcademicRegistry.setText("" + selectedAluno.getRa());
+        jcbPeriodo.setSelectedItem("" + selectedAluno.getPeriodo());
+        jcbCurso.setSelectedItem(selectedAluno.getNome_curso());
+        jtNome.setText(selectedAluno.getNome());
+        jtfCoeficiente.setText("" + selectedAluno.getCoeficiente());
+        jcbTurno.setSelectedItem(selectedAluno.getTurno());
+        jDateIngresso.setDate(selectedAluno.getIngresso());
+        jcbSituacao.setSelectedItem(selectedAluno.getSituacao());
+        jtTelefone.setText(selectedAluno.getTelefone());
+
 
     }//GEN-LAST:event_jTableAlunosMouseClicked
 
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
-
+        Aluno aluno = VOHelper.createAlunoVO(jtAcademicRegistry.getText(),
+                jcbPeriodo.getSelectedItem().toString(),
+                jcbCurso.getSelectedItem().toString(),
+                jtNome.getText(),
+                jtfCoeficiente.getText(),
+                jcbTurno.getSelectedItem().toString(),
+                jDateIngresso.getDate(),
+                jcbSituacao.getSelectedItem().toString(),
+                jtTelefone.getText());
+        aluno.setIdaluno(selectedAluno.getIdaluno());
+        if(selectedAluno != null)
+            showMessage(alunoController.updateAluno(aluno), "update");
     }//GEN-LAST:event_jbUpdateActionPerformed
 
     private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
-     
+        if(selectedAluno != null)
+            showMessage(alunoController.deleteAluno(selectedAluno), "remove");
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jbDeleteActionPerformed
 
@@ -329,8 +369,7 @@ public class FormAluno extends javax.swing.JFrame {
             JOptionPane.showConfirmDialog(null, "Aluno(a) não " + message, title, JOptionPane.ERROR_MESSAGE);
         }
     }
-            
-         
+
     public static void query(boolean bool, String type) {
 
     }
@@ -377,6 +416,7 @@ public class FormAluno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPAluno;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableAlunos;
@@ -393,6 +433,7 @@ public class FormAluno extends javax.swing.JFrame {
     private javax.swing.JLabel jlPeriod;
     private javax.swing.JTextField jtAcademicRegistry;
     private javax.swing.JTextField jtNome;
+    private javax.swing.JTextField jtTelefone;
     private javax.swing.JFormattedTextField jtfCoeficiente;
     // End of variables declaration//GEN-END:variables
 }

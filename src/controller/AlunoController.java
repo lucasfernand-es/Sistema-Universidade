@@ -28,5 +28,13 @@ public class AlunoController {
     public boolean registrarAluno(Aluno aluno) {
         return DAOFactory.buscarInstancia().getAlunoPersDAO().registryAluno(aluno);
     }
+    
+    public boolean updateAluno(Aluno aluno){
+        return DAOFactory.buscarInstancia().getAlunoPersDAO().updateAluno(aluno);
+    }
+
+    public Boolean deleteAluno(Aluno aluno) {
+        return DAOFactory.buscarInstancia().getAlunoPersDAO().deleteAluno(aluno);
+    }
 
 }

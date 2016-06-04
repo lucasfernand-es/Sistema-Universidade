@@ -25,7 +25,7 @@ public class VOHelper {
         return p;
     }
 
-    public static Aluno createAlunoVO(String ra, String periodo, String curso, String nome, String coeficiente, String turno, Date dateIngresso, String situacao) {
+    public static Aluno createAlunoVO(String ra, String periodo, String curso, String nome, String coeficiente, String turno, Date dateIngresso, String situacao, String telefone) {
         Aluno aluno = new Aluno();
         
         aluno.setRa(Integer.parseInt(ra));
@@ -36,6 +36,7 @@ public class VOHelper {
         aluno.setTurno(turno);
         aluno.setIngresso(dateIngresso);
         aluno.setSituacao(situacao);
+        aluno.setTelefone(telefone);
         
         return aluno;
     }
