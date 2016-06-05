@@ -7,10 +7,12 @@ package VO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -19,28 +21,32 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Professor implements Serializable {
+
+    @OneToMany(mappedBy = "professor")
+    private List<Turma> turmas;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id_professor;
+    private long id_professor;
     private String nome;
     private String rg;
     private String cpf;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
     private String email;
-    private String status;
+    private boolean status;
 
     /**
      * @return the id_professor
      */
-    public int getId_professor() {
+    public long getId_professor() {
         return id_professor;
     }
 
     /**
      * @param id_professor the id_professor to set
      */
-    public void setId_professor(int id_professor) {
+    public void setId_professor(long id_professor) {
         this.id_professor = id_professor;
     }
 
@@ -114,21 +120,35 @@ public class Professor implements Serializable {
         this.email = email;
     }
 
+    
+    @Override
+    public String toString()
+    {
+        return this.getNome();
+    }
+
     /**
      * @return the status
      */
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
-
-    /**
-     * @param cpf the cpf to set
-     */
+    
+    
+    public String isStatusString()
+    {
+        return (this.isStatus())? "Ativo": "Inativo";
+    }
+    
+    public boolean isStatusBoolean(String status)
+    {
+        return (status.equals("Ativo"));
+    }
 }

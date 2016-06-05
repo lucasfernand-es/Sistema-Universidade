@@ -21,5 +21,7 @@ public interface ProfessorPersDAO {
     public abstract boolean updateProfessor(Professor professor);
 
     public abstract boolean removeProfessor(int idProfessor);
+
+    public abstract List<Professor> searchProfessor(Professor professor);
     
 }

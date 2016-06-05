@@ -7,7 +7,6 @@ package view;
 
 import VO.Professor;
 import VO.VOHelper;
-import controller.AlunoController;
 import controller.ProfessorController;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,7 +49,9 @@ public class FormProfessores extends javax.swing.JFrame {
 
         professors.stream().forEach((pr) -> {
             modelProfessors.addRow(new Object[]{
-                pr.getNome(), dateFormat(pr.getDataNascimento()), pr.getCpf(),
+                pr.getNome(), 
+                (pr.getDataNascimento() != null)? dateFormat(pr.getDataNascimento()) : null, 
+                pr.getCpf(),
                 pr.getRg(), pr.getEmail()
             });
         });
@@ -157,7 +158,7 @@ public class FormProfessores extends javax.swing.JFrame {
             }
         });
 
-        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Inativo", "Ativo" }));
 
         jLabel1.setText("Status:");
 
@@ -238,8 +239,8 @@ public class FormProfessores extends javax.swing.JFrame {
                     .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jbAlterar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbDeletar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -259,7 +260,8 @@ public class FormProfessores extends javax.swing.JFrame {
             selectedProfessor.setNome(jtnome.getText());
             selectedProfessor.setEmail(jtemail.getText());
             selectedProfessor.setDataNascimento(jDateBirth.getDate());
-            selectedProfessor.setStatus(jcbStatus.getSelectedItem().toString());
+            selectedProfessor.setStatus(  selectedProfessor.isStatusBoolean( jcbStatus.getSelectedItem().toString() )  );
+            
             showMessage(professorController.updateProfessor(selectedProfessor), "update");
         }
         // TODO add your handling code here:
@@ -286,14 +288,20 @@ public class FormProfessores extends javax.swing.JFrame {
         jDateBirth.setDate(selectedProfessor.getDataNascimento());
         jtnome.setText(selectedProfessor.getNome());
         jtemail.setText(selectedProfessor.getEmail());
-        jcbStatus.setSelectedItem(selectedProfessor.getStatus());
+        jcbStatus.setSelectedItem(selectedProfessor.isStatusString());
+        
     }//GEN-LAST:event_jTableProfessorsMouseClicked
 
     private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        
+        /*
         if(selectedProfessor != null){
-            showMessage(professorController.removeProfessor(selectedProfessor.getId_professor()), "remove");
+            showMessage(professorController.removeProfessor((int) selectedProfessor.getId_professor()), "remove");
         }
-        // TODO add your handling code here:
+        */
+        this.selectedProfessor.setStatus( false );
+        showMessage(professorController.updateProfessor(selectedProfessor), "remove");
+        
     }//GEN-LAST:event_jbDeletarActionPerformed
 
     private void showMessage(Boolean b, String type) {
@@ -349,10 +357,8 @@ public class FormProfessores extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormProfessores().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FormProfessores().setVisible(true);
         });
     }
 

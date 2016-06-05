@@ -9,7 +9,6 @@ import VO.Aluno;
 import VO.Professor;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -37,11 +36,10 @@ public class ProfessorPersDAOMySQL implements ProfessorPersDAO {
         }
         return true;
     }
-
-    @Override
-    public List<Professor> searchProfessor() {
+    
+    public List<Professor> search(String qString)
+    {
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        String qString = "SELECT p from Professor p";
         TypedQuery<Professor> q = em.createQuery(qString, Professor.class);
         List<Professor> results = null;
 
@@ -53,6 +51,18 @@ public class ProfessorPersDAOMySQL implements ProfessorPersDAO {
             em.close();
         }
         return results;
+    }
+    
+    @Override
+    public List<Professor> searchProfessor(Professor professor) {
+        String qString = "SELECT p from Professor p WHERE p.status = " + professor.isStatus();
+        return this.search(qString);
+    }
+
+    @Override
+    public List<Professor> searchProfessor() {
+        String qString = "SELECT p from Professor p";
+        return this.search(qString);
     }
 
     @Override
@@ -69,7 +79,7 @@ public class ProfessorPersDAOMySQL implements ProfessorPersDAO {
             queryProfessor.setRg(professor.getRg());
             queryProfessor.setNome(professor.getNome());
             queryProfessor.setEmail(professor.getEmail());
-            queryProfessor.setStatus(professor.getStatus());
+            queryProfessor.setStatus(professor.isStatus());
             
             trans.commit();
         } catch (Exception e) {
@@ -102,5 +112,6 @@ public class ProfessorPersDAOMySQL implements ProfessorPersDAO {
         }
         return true;
     }
+
 
 }

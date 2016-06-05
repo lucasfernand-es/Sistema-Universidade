@@ -6,11 +6,13 @@
 package VO;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +20,9 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Disciplina implements Serializable {
+
+    @OneToMany(mappedBy = "disciplina")
+    private List<Turma> turmas;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id_disciplina;
@@ -25,8 +30,12 @@ public class Disciplina implements Serializable {
     private int periodo;
     private int carga_horaria;
     private String ementa;
-    private long id_professor;
+    private boolean status;
+    //private long professor_id_professor;
     
+    
+    @ManyToOne
+    private Professor professor;
 
     /**
      * @return the id_disciplina
@@ -99,17 +108,41 @@ public class Disciplina implements Serializable {
     }
 
     /**
-     * @return the id_professor
+     * @return the professor
      */
-    public long getId_professor() {
-        return id_professor;
+    public Professor getProfessor() {
+        return professor;
     }
 
     /**
-     * @param id_professor the id_professor to set
+     * @param professor the professor to set
      */
-    public void setId_professor(long id_professor) {
-        this.id_professor = id_professor;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String isStatusString()
+    {
+        return (this.isStatus())? "Ativo": "Inativo";
+    }
+    
+    public boolean isStatusBoolean(String status)
+    {
+        return (status.equals("Ativo"));
     }
 
 

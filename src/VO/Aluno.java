@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 public class Aluno implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idaluno;
+    private long id_aluno;
     private int ra;
     private String nome;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -138,19 +138,7 @@ public class Aluno implements Serializable {
         this.nome_curso = nome_curso;
     }
 
-    /**
-     * @return the id_aluno
-     */
-    public long getIdaluno() {
-        return idaluno;
-    }
 
-    /**
-     * @param id_aluno the id_aluno to set
-     */
-    public void setIdaluno(long idaluno) {
-        this.idaluno = idaluno;
-    }
 
     /**
      * @return the turno
@@ -178,6 +166,20 @@ public class Aluno implements Serializable {
      */
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    /**
+     * @return the id_aluno
+     */
+    public long getId_aluno() {
+        return id_aluno;
+    }
+
+    /**
+     * @param id_aluno the id_aluno to set
+     */
+    public void setId_aluno(long id_aluno) {
+        this.id_aluno = id_aluno;
     }
 
 

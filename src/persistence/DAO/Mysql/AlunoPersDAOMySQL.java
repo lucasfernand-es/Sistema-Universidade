@@ -20,10 +20,24 @@ import persistence.DAO.AlunoPersDAO;
  */
 public class AlunoPersDAOMySQL implements AlunoPersDAO {
 
+    private List<Aluno> search(String qString) 
+    {
+        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
+        TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
+        List<Aluno> results = null;
+
+        try {
+            results = q.getResultList();
+        } catch (NoResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+        return results; 
+    }
     @Override
     public List<Aluno> searchAluno(Aluno aluno, int type) {
 
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         String qString = null;
         switch (type) {
             case 1:
@@ -33,38 +47,18 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
                 qString = "SELECT a FROM Aluno a WHERE a.nome = '" + aluno.getNome() + "'";
                 break;
             default:
-                qString = "";
+                qString = "SELECT a from Aluno a";
                 break;
         }
-
-        TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
-        List<Aluno> results = null;
-
-        try {
-            results = q.getResultList();
-        } catch (NoResultException ex) {
-            System.out.println("Error " + ex.getMessage());
-            return null;
-        } finally {
-            em.close();
-        }
-        return results;
+        
+        return this.search(qString);
     }
 
+    @Override
     public List<Aluno> searchAluno() {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         String qString = "SELECT a from Aluno a";
-        TypedQuery<Aluno> q = em.createQuery(qString, Aluno.class);
-        List<Aluno> results = null;
-
-        try {
-            results = q.getResultList();
-        } catch (NoResultException ex) {
-            return null;
-        } finally {
-            em.close();
-        }
-        return results;
+        
+        return this.search(qString);
     }
 
     @Override
@@ -84,6 +78,7 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
         return true;
     }
 
+    @Override
     public boolean updateAluno(Aluno aluno) {
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -108,7 +103,7 @@ public class AlunoPersDAOMySQL implements AlunoPersDAO {
         
         try {
             
-            Aluno queryAluno = em.find(Aluno.class, aluno.getIdaluno());
+            Aluno queryAluno = em.find(Aluno.class, aluno.getId_aluno());
             em.remove(queryAluno);
             
             trans.commit();

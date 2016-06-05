@@ -5,7 +5,6 @@
  */
 package controller;
 
-import VO.Aluno;
 import VO.Aluno_Disciplina;
 import VO.Disciplina;
 import java.util.List;
@@ -21,6 +20,24 @@ public class DisciplinaController {
      
         List<Disciplina> newListDisciplina = DAOFactory.buscarInstancia().getDisciplinaPersDAO().searchDisciplina(aluno_Disciplina);        
         return newListDisciplina;
+    }
+    
+    public static List<Disciplina> searchDisciplina() {
+     
+        List<Disciplina> newListDisciplina = DAOFactory.buscarInstancia().getDisciplinaPersDAO().searchDisciplina();        
+        return newListDisciplina;
+    }
+
+    public Boolean registrarDisciplina(Disciplina disciplina) {
+        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().registryDisciplina(disciplina);
+    }
+
+    public Boolean deleteDisciplina(Disciplina disciplina) {
+        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().deleteDisciplina(disciplina);
+    }
+
+    public Boolean updateDisciplina(Disciplina disciplina) {
+        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().updateDisciplina(disciplina);
     }
     
 }

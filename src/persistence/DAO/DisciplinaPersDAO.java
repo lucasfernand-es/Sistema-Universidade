@@ -15,4 +15,11 @@ import java.util.List;
  */
 public interface DisciplinaPersDAO {
     public abstract List<Disciplina> searchDisciplina(Aluno_Disciplina aluno_Disciplina);
+    public abstract List<Disciplina> searchDisciplina();
+
+    public abstract Boolean registryDisciplina(Disciplina disciplina);
+
+    public abstract Boolean deleteDisciplina(Disciplina disciplina);
+
+    public abstract Boolean updateDisciplina(Disciplina disciplina);
 }

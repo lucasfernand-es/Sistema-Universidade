@@ -20,6 +20,7 @@ public abstract class DAOFactory {
     public abstract Aluno_DisciplinaPersDAO getAluno_DisciplinaPersDAO();
     public abstract ProfessorPersDAO getProfessorPersDAO();
     public abstract DisciplinaPersDAO getDisciplinaPersDAO();
+    public abstract TurmaPersDAO getTurmaPersDAO();
 
     public static DAOFactory buscarInstancia(int fabrica) {
         
@@ -39,4 +40,5 @@ public abstract class DAOFactory {
         
         return buscarInstancia(1);
     }    
+
 }

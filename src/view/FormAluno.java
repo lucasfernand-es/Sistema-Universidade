@@ -108,7 +108,7 @@ public class FormAluno extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableAlunos);
 
-        jPAluno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aluno", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(51, 0, 255))); // NOI18N
+        jPAluno.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Aluno", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(51, 0, 255))); // NOI18N
         jPAluno.setForeground(new java.awt.Color(51, 0, 255));
 
         jlAcademicRegistry.setText("RA: ");
@@ -195,11 +195,6 @@ public class FormAluno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPAlunoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(jbRegister))
-                    .addGroup(jPAlunoLayout.createSequentialGroup()
                         .addComponent(jlCourse)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -216,8 +211,16 @@ public class FormAluno extends javax.swing.JFrame {
                             .addGroup(jPAlunoLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 141, Short.MAX_VALUE))))
+                                .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPAlunoLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                                        .addComponent(jbRegister)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPAlunoLayout.createSequentialGroup()
+                                        .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addContainerGap())))
         );
         jPAlunoLayout.setVerticalGroup(
             jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,15 +249,18 @@ public class FormAluno extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbUpdate)
-                    .addComponent(jbRegister)
-                    .addComponent(jLabel5)
-                    .addComponent(jtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbUpdate)
+                        .addComponent(jbRegister)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jbDelete.setText("Deletar");
+        jbDelete.setEnabled(false);
         jbDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbDeleteActionPerformed(evt);
@@ -279,7 +285,7 @@ public class FormAluno extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -329,21 +335,21 @@ public class FormAluno extends javax.swing.JFrame {
                 jDateIngresso.getDate(),
                 jcbSituacao.getSelectedItem().toString(),
                 jtTelefone.getText());
-        aluno.setIdaluno(selectedAluno.getIdaluno());
+        aluno.setId_aluno(selectedAluno.getId_aluno());
         if(selectedAluno != null)
             showMessage(alunoController.updateAluno(aluno), "update");
     }//GEN-LAST:event_jbUpdateActionPerformed
 
-    private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
-        if(selectedAluno != null)
-            showMessage(alunoController.deleteAluno(selectedAluno), "remove");
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbDeleteActionPerformed
-
     private void jtfCoeficienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCoeficienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCoeficienteActionPerformed
+
+    private void jbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeleteActionPerformed
+        if(selectedAluno != null)
+        showMessage(alunoController.deleteAluno(selectedAluno), "remove");
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbDeleteActionPerformed
 
     private void showMessage(Boolean b, String type) {
         String title = null, message = null;

@@ -6,6 +6,7 @@
 package VO;
 
 import java.util.Date;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -20,7 +21,7 @@ public class VOHelper {
         p.setRg(rg);
         p.setDataNascimento(dataNascimento);
         p.setEmail(email);
-        p.setStatus(status);
+        p.setStatus(p.isStatusBoolean(status));
         
         return p;
     }
@@ -40,4 +41,18 @@ public class VOHelper {
         
         return aluno;
     }
+
+    public static Disciplina createDisciplinaVO(String nome, int periodo, int cargaHoraria, String ementa, Professor professor, String status) {
+        Disciplina disciplina = new Disciplina();
+        
+        disciplina.setNome(nome);
+        disciplina.setPeriodo(periodo);
+        disciplina.setCarga_horaria(cargaHoraria);
+        disciplina.setEmenta(ementa);
+        disciplina.setProfessor(professor);
+        disciplina.setStatus(disciplina.isStatusBoolean(status));
+        
+        return disciplina;
+    }
+
 }
