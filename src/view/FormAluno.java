@@ -8,6 +8,7 @@ package view;
 import VO.Aluno;
 import VO.VOHelper;
 import controller.AlunoController;
+import static controller.TypeData.ALUNO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +32,7 @@ public class FormAluno extends javax.swing.JFrame {
     }
 
     private void populateTable() {
-        this.alunos = alunoController.searchAlunos();
+        this.alunos = alunoController.search();
 
         // Atualizando a tabela
         DefaultTableModel modelAlunos = (DefaultTableModel) jTableAlunos.getModel();

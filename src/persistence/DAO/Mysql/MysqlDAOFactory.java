@@ -88,5 +88,10 @@ public class MysqlDAOFactory extends DAOFactory{
         }
     }
 
+    @Override
+    public TurmaPersDAO getTurmaPersDAO() {
+       return new TurmaPersDAOMySQL();
+    }
+
     
 }

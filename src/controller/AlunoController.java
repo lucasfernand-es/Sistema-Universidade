@@ -6,35 +6,30 @@
 package controller;
 
 import VO.Aluno;
-import java.util.ArrayList;
+import VO.ValueObject;
+import static controller.TypeData.ALUNO;
 import java.util.List;
-import persistence.DAO.DAOFactory;
+import persistence.DAO.AlunoPersDAO;
 
 /**
  *
  * @author lucasfernandes
  */
-public class AlunoController {
-
-    public static List<Aluno> searchAluno(Aluno aluno, int type) {
-        List<Aluno> newListAluno = DAOFactory.buscarInstancia().getAlunoPersDAO().searchAluno(aluno, type);
-        return newListAluno;
-    }
-
-    public List<Aluno> searchAlunos() {
-        return DAOFactory.buscarInstancia().getAlunoPersDAO().searchAluno();
-    }
-
-    public boolean registrarAluno(Aluno aluno) {
-        return DAOFactory.buscarInstancia().getAlunoPersDAO().registryAluno(aluno);
-    }
+public class AlunoController extends BaseController {
     
-    public boolean updateAluno(Aluno aluno){
-        return DAOFactory.buscarInstancia().getAlunoPersDAO().updateAluno(aluno);
+    public AlunoController()
+    {
+        super.setType(ALUNO);
+        super.setInstance();
     }
 
-    public Boolean deleteAluno(Aluno aluno) {
-        return DAOFactory.buscarInstancia().getAlunoPersDAO().deleteAluno(aluno);
+    
+    public List<ValueObject> searchAluno(Aluno aluno, int type) {
+        
+        AlunoPersDAO alunoPersDAO = (AlunoPersDAO) super.getBasePersDAO();
+        
+        return alunoPersDAO.searchAluno(aluno, type);
+        
     }
 
 }

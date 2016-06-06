@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
  * @author lucasfernandes
  */
 @Entity
-public class Aluno implements Serializable {
+public class Aluno extends ValueObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id_aluno;
@@ -35,14 +35,7 @@ public class Aluno implements Serializable {
 
     
     
-//    @Override
-//    public String toString(){
-//        return this.getNome() + " - " + this.getRa();
-//    }
-//    
-    /**
-     * @return the ra
-     */
+
     public int getRa() {
         return ra;
     }
@@ -180,6 +173,16 @@ public class Aluno implements Serializable {
      */
     public void setId_aluno(long id_aluno) {
         this.id_aluno = id_aluno;
+    }
+
+    @Override
+    public long getId() {
+        return this.id_aluno;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id_aluno = id;
     }
 
 
