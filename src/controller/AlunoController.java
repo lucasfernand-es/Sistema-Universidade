@@ -7,7 +7,7 @@ package controller;
 
 import VO.Aluno;
 import VO.ValueObject;
-import static controller.TypeData.ALUNO;
+import static controller.TypeData.*;
 import java.util.List;
 import persistence.DAO.AlunoPersDAO;
 
@@ -19,10 +19,8 @@ public class AlunoController extends BaseController {
     
     public AlunoController()
     {
-        super.setType(ALUNO);
-        super.setInstance();
+        super(ALUNO);
     }
-
     
     public List<ValueObject> searchAluno(Aluno aluno, int type) {
         

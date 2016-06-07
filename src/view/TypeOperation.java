@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence.DAO;
-
+package view;
 
 /**
  *
- * @author viniciuscustodio
+ * @author lucasfernandes
  */
-public interface DisciplinaPersDAO extends BasePersDAO
-{
-    
+public enum TypeOperation {
+    INSERT,
+    UPDATE,
+    REMOVE
 }

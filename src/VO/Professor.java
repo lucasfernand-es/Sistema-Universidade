@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
  * @author lucasfernandes
  */
 @Entity
-public class Professor implements Serializable {
+public class Professor extends ValueObject implements Serializable {
 
     @OneToMany(mappedBy = "professor")
     private List<Turma> turmas;
@@ -150,5 +150,15 @@ public class Professor implements Serializable {
     public boolean isStatusBoolean(String status)
     {
         return (status.equals("Ativo"));
+    }
+
+    @Override
+    public long getId() {
+        return this.id_professor;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id_professor = id; 
     }
 }

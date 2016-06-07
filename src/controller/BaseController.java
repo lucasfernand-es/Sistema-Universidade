@@ -6,7 +6,7 @@
 package controller;
 
 
-import VO.ValueObject;
+import VO.*;
 import java.util.List;
 import persistence.DAO.BasePersDAO;
 import persistence.DAO.DAOFactory;
@@ -20,7 +20,20 @@ public class BaseController {
     private TypeData type;
     private BasePersDAO basePersDAO;
     
-    public BasePersDAO setInstance()
+   
+    
+    public BaseController(TypeData type)
+    {
+        this.type = type;
+        
+        setCurrentInstance();
+    }
+    
+    public BaseController()
+    {
+    }
+
+     public void setCurrentInstance()
     {
         switch(getType())
         {
@@ -28,25 +41,19 @@ public class BaseController {
                 setBasePersDAO(DAOFactory.buscarInstancia().getAlunoPersDAO());
                 break;
             case PROFESSOR:
+                setBasePersDAO(DAOFactory.buscarInstancia().getProfessorPersDAO());
+                break;
+            case DISCIPLINA:
+                setBasePersDAO(DAOFactory.buscarInstancia().getDisciplinaPersDAO());
                 break;
             default:
                 break;
                 
         }
-        return null;
     }
-    
-    public BaseController(TypeData type)
-    {
-        this.type = type;
-    }
-    
-    public BaseController()
-    {
-    }
-
     public List search() {
-        return getBasePersDAO().search();
+        
+        return getBasePersDAO().search(this.getType());
     }
 
     public boolean registry(ValueObject vo) {
@@ -61,33 +68,23 @@ public class BaseController {
         return getBasePersDAO().delete(vo);
     }
 
-    /**
-     * @return the type
-     */
     public TypeData getType() {
         return type;
     }
 
-    /**
-     * @param type the type to set
-     */
+
     public void setType(TypeData type) {
         this.type = type;
     }
 
-    /**
-     * @return the basePersDAO
-     */
     public BasePersDAO getBasePersDAO() {
         return basePersDAO;
     }
 
-    /**
-     * @param basePersDAO the basePersDAO to set
-     */
     public void setBasePersDAO(BasePersDAO basePersDAO) {
         this.basePersDAO = basePersDAO;
     }
+
     
 
 }

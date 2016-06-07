@@ -11,18 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
  * @author lucasfernandes
  */
 @Entity
-public class Disciplina implements Serializable {
+public class Disciplina extends ValueObject implements Serializable {
 
-    @OneToMany(mappedBy = "disciplina")
-    private List<Turma> turmas;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id_disciplina;
@@ -33,9 +29,6 @@ public class Disciplina implements Serializable {
     private boolean status;
     //private long professor_id_professor;
     
-    
-    @ManyToOne
-    private Professor professor;
 
     /**
      * @return the id_disciplina
@@ -108,20 +101,6 @@ public class Disciplina implements Serializable {
     }
 
     /**
-     * @return the professor
-     */
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    /**
-     * @param professor the professor to set
-     */
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
-
-    /**
      * @return the status
      */
     public boolean isStatus() {
@@ -143,6 +122,16 @@ public class Disciplina implements Serializable {
     public boolean isStatusBoolean(String status)
     {
         return (status.equals("Ativo"));
+    }
+
+    @Override
+    public long getId() {
+        return this.id_disciplina;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id_disciplina = id;
     }
 
 

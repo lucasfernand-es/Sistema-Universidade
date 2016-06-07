@@ -31,16 +31,8 @@ public class AlunoPersDAOMySQL extends BasePersDAOMySQL implements AlunoPersDAO 
                 break;
         }
         
-        return super.search(new Aluno(), qString);
+        return super.search(Aluno.class, qString);
     }
-    
-    @Override
-    public List search() 
-    {
-        String qString = "SELECT a from Aluno a";
-        
-        
-        return super.search(new Aluno(), qString); 
-    }
+
 
 }

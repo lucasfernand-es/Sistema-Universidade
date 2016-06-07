@@ -6,7 +6,6 @@
 package VO;
 
 import java.util.Date;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -26,7 +25,8 @@ public class VOHelper {
         return p;
     }
 
-    public static Aluno createAlunoVO(String ra, String periodo, String curso, String nome, String coeficiente, String turno, Date dateIngresso, String situacao, String telefone) {
+    public static Aluno createAlunoVO(String ra, String periodo, String curso, String nome, 
+            String coeficiente, String turno, Date dateIngresso, String situacao, String telefone) {
         Aluno aluno = new Aluno();
         
         aluno.setRa(Integer.parseInt(ra));
@@ -42,14 +42,13 @@ public class VOHelper {
         return aluno;
     }
 
-    public static Disciplina createDisciplinaVO(String nome, int periodo, int cargaHoraria, String ementa, Professor professor, String status) {
+    public static Disciplina createDisciplinaVO(String nome, int periodo, int cargaHoraria, String ementa, String status) {
         Disciplina disciplina = new Disciplina();
         
         disciplina.setNome(nome);
         disciplina.setPeriodo(periodo);
         disciplina.setCarga_horaria(cargaHoraria);
         disciplina.setEmenta(ementa);
-        disciplina.setProfessor(professor);
         disciplina.setStatus(disciplina.isStatusBoolean(status));
         
         return disciplina;

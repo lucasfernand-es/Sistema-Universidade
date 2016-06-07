@@ -7,6 +7,7 @@ package persistence.DAO;
 
 
 import VO.ValueObject;
+import controller.TypeData;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
  */
 public interface BasePersDAO {
 
-    public abstract List search();
+    public abstract List search(TypeData typeData);
+    
+    public abstract List search(ValueObject vo);
 
     public abstract boolean registry(ValueObject vo);
 

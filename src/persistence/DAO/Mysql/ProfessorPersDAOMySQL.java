@@ -7,6 +7,7 @@ package persistence.DAO.Mysql;
 
 import VO.Aluno;
 import VO.Professor;
+import VO.ValueObject;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -18,100 +19,17 @@ import persistence.DAO.ProfessorPersDAO;
  *
  * @author viniciuscustodio
  */
-public class ProfessorPersDAOMySQL implements ProfessorPersDAO {
-
-    @Override
-    public boolean registryProfessor(Professor professor) {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-        trans.begin();
-        try {
-            em.persist(professor);
-            trans.commit();
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        } finally {
-            em.close();
-        }
-        return true;
-    }
-    
-    public List<Professor> search(String qString)
-    {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        TypedQuery<Professor> q = em.createQuery(qString, Professor.class);
-        List<Professor> results = null;
-
-        try {
-            results = q.getResultList();
-        } catch (NoResultException ex) {
-            return null;
-        } finally {
-            em.close();
-        }
-        return results;
-    }
+public class ProfessorPersDAOMySQL extends BasePersDAOMySQL implements ProfessorPersDAO {
     
     @Override
-    public List<Professor> searchProfessor(Professor professor) {
-        String qString = "SELECT p from Professor p WHERE p.status = " + professor.isStatus();
-        return this.search(qString);
-    }
-
-    @Override
-    public List<Professor> searchProfessor() {
-        String qString = "SELECT p from Professor p";
-        return this.search(qString);
-    }
-
-    @Override
-    public boolean updateProfessor(Professor professor) {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-        trans.begin();
-        try {
-            
-            Professor queryProfessor = em.find(Professor.class, professor.getId_professor());
-            
-            queryProfessor.setCpf(professor.getCpf());
-            queryProfessor.setDataNascimento(professor.getDataNascimento());
-            queryProfessor.setRg(professor.getRg());
-            queryProfessor.setNome(professor.getNome());
-            queryProfessor.setEmail(professor.getEmail());
-            queryProfessor.setStatus(professor.isStatus());
-            
-            trans.commit();
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        } finally {
-            em.close();
-        }
-        return true;
-    
-    }
-
-    @Override
-    public boolean removeProfessor(int idProfessor) {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
-        trans.begin();
+    public List search(ValueObject vo) {
+        Professor professor = (Professor) vo;
         
-        try {
-            
-            Professor queryProfessor = em.find(Professor.class, idProfessor);
-            em.remove(queryProfessor);
-            
-            trans.commit();
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        } finally {
-            em.close();
-        }
-        return true;
+        String qString = "SELECT p from Professor p WHERE p.Nome like '%" + professor.getNome() + "%' ";
+        
+        return super.search(Professor.class, qString); 
     }
 
+    
 
 }

@@ -3,10 +3,10 @@
   <persistence-unit name="MySQLUniversity" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>VO.Aluno</class>
-    <class>VO.Aluno_Disciplina</class>
     <class>VO.Disciplina</class>
     <class>VO.Professor</class>
     <class>VO.Turma</class>
+    <class>VO.Aluno_Disciplina</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/university?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

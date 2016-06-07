@@ -181,9 +181,14 @@ public class Aluno extends ValueObject implements Serializable {
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(long id) {
         this.id_aluno = id;
     }
-
+    
+    @Override
+    public String toString()
+    {
+        return this.nome;
+    }
 
 }

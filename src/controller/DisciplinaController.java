@@ -5,39 +5,28 @@
  */
 package controller;
 
-import VO.Aluno_Disciplina;
-import VO.Disciplina;
-import java.util.List;
-import persistence.DAO.DAOFactory;
+import static controller.TypeData.*;
+
 
 /**
  *
  * @author lucasfernandes
  */
-public class DisciplinaController {
+public class DisciplinaController extends BaseController{
 
+    
+    public DisciplinaController()
+    {
+        super(DISCIPLINA);
+    }
+    /*
     public static List<Disciplina> searchDisciplina(Aluno_Disciplina aluno_Disciplina) {
      
         List<Disciplina> newListDisciplina = DAOFactory.buscarInstancia().getDisciplinaPersDAO().searchDisciplina(aluno_Disciplina);        
         return newListDisciplina;
     }
+*/
     
-    public static List<Disciplina> searchDisciplina() {
-     
-        List<Disciplina> newListDisciplina = DAOFactory.buscarInstancia().getDisciplinaPersDAO().searchDisciplina();        
-        return newListDisciplina;
-    }
 
-    public Boolean registrarDisciplina(Disciplina disciplina) {
-        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().registryDisciplina(disciplina);
-    }
-
-    public Boolean deleteDisciplina(Disciplina disciplina) {
-        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().deleteDisciplina(disciplina);
-    }
-
-    public Boolean updateDisciplina(Disciplina disciplina) {
-        return DAOFactory.buscarInstancia().getDisciplinaPersDAO().updateDisciplina(disciplina);
-    }
     
 }

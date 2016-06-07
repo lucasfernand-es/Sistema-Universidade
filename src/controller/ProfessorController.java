@@ -6,34 +6,22 @@
 package controller;
 
 import VO.Professor;
+import static controller.TypeData.*;
 import java.util.List;
-import persistence.DAO.DAOFactory;
 
 /**
  *
  * @author viniciuscustodio
  */
-public class ProfessorController {
+public class ProfessorController extends BaseController{
  
-    public boolean registryProfessor(Professor professor){
-        return DAOFactory.buscarInstancia().getProfessorPersDAO().registryProfessor(professor);
+    public ProfessorController()
+    {
+        super(PROFESSOR);
+        
     }
 
-    public List<Professor> searchProfessor() {
-        return DAOFactory.buscarInstancia().getProfessorPersDAO().searchProfessor();
-    }
 
-    public List<Professor> searchProfessor(Professor professor) {
-        return DAOFactory.buscarInstancia().getProfessorPersDAO().searchProfessor(professor);
-    }
-
-    public boolean updateProfessor(Professor professor) {
-        return DAOFactory.buscarInstancia().getProfessorPersDAO().updateProfessor(professor);
-    }
-
-    public boolean removeProfessor(int idProfessor) {
-        return DAOFactory.buscarInstancia().getProfessorPersDAO().removeProfessor(idProfessor);
-    }
     
     public int searchProfessor(List<Professor> professors, Professor professor)
     {

@@ -12,6 +12,8 @@ package controller;
 public enum TypeData {
     
     ALUNO,
-    PROFESSOR
+    PROFESSOR,
+    DISCIPLINA,
+    TURMA
     
 }

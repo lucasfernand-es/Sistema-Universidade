@@ -6,13 +6,16 @@
 package persistence.DAO.Mysql;
 
 
-import VO.ValueObject;
+import VO.*;
+import controller.TypeData;
+import controller.TypeDataOperation;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import persistence.DAO.BasePersDAO;
+import view.ViewHelper;
 
 /**
  *
@@ -59,30 +62,6 @@ public class BasePersDAOMySQL implements BasePersDAO {
         
     }
     
-    public List search(ValueObject vo, String qString)
-    {
-        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
-        TypedQuery q = em.createQuery(qString, vo.getClass());
-        List results = null;
-
-        try {
-            results = q.getResultList();
-        } catch (NoResultException ex) {
-            return null;
-        } finally {
-            em.close();
-        }
-        return results;
-    }
-    
-    @Override
-    public List search() {
-        String qString = "";
-        
-        return this.search((ValueObject) new Object(), qString);
-    }
-
-    
     @Override
     public boolean delete(ValueObject vo) {
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
@@ -90,18 +69,58 @@ public class BasePersDAOMySQL implements BasePersDAO {
         trans.begin();
         
         try {
-            
             ValueObject query = em.find(vo.getClass(), vo.getId());
             em.remove(query);
             
             trans.commit();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            ViewHelper.errorMessage(ex.getMessage());
             return false;
         } finally {
             em.close();
         }
         return true;
     }
+    
+    
+    public List search(Class classType, String query)
+    {
+        EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
+        TypedQuery q = em.createQuery(query, classType);
+        List results = null;
+
+        try {
+            results = q.getResultList();
+        } catch (NoResultException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        } finally {
+            em.close();
+        }
+        return results;
+    }
+    
+   
+    @Override
+    public List search(TypeData typeData) {
+        String query = "SELECT x FROM " + TypeDataOperation.getTypeDataString(typeData) + " x";
+        
+        return this.search( TypeDataOperation.getTypeDataClass(typeData) , query);
+    }
+    
+    
+
+    @Override
+    public List search(ValueObject vo) {
+        String query = "SELECT x FROM " + vo.getClass() + " x";
+        System.out.println("é pra dar errado mexxxmo | search - BasePersMYSQL");
+        return this.search(vo.getClass(), query);
+    }
+
+
+    
+    
+
+    
     
 }

@@ -5,26 +5,20 @@
  */
 package view;
 
-import VO.Professor;
-import VO.VOHelper;
-import controller.ProfessorController;
+import VO.*;
+import controller.*;
+import static controller.TypeData.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 /**
  *
  * @author viniciuscustodio
  */
-public class FormProfessores extends javax.swing.JFrame {
+public class FormProfessores extends FormTemplate {
 
-    ProfessorController professorController = new ProfessorController();
-    List<Professor> professors;
-    Professor selectedProfessor = null;
     
     private MaskFormatter setMascara(String mascara) {
         MaskFormatter mask = null;
@@ -40,28 +34,80 @@ public class FormProfessores extends javax.swing.JFrame {
         return df.format(date);
     }
 
-    private void populateTable(){
-        this.professors = professorController.searchProfessor();
 
-        // Atualizando a tabela
-        DefaultTableModel modelProfessors = (DefaultTableModel) jTableProfessors.getModel();
-        modelProfessors.setRowCount(0);
-
-        professors.stream().forEach((pr) -> {
-            modelProfessors.addRow(new Object[]{
-                pr.getNome(), 
-                (pr.getDataNascimento() != null)? dateFormat(pr.getDataNascimento()) : null, 
-                pr.getCpf(),
-                pr.getRg(), pr.getEmail()
-            });
-        });
-    }
-    /**
-     * Creates new form FormProfessores
-     */
     public FormProfessores() {
+        
+        super(); 
+        super.typeData = PROFESSOR;
         initComponents();
-        populateTable();
+        this.classController = new ProfessorController();
+ 
+        ViewHelper.iniciarComponentes(this, this.typeData);
+    }
+    
+    @Override
+    protected void changeEnable(boolean isTrue){
+        
+        ViewHelper.setEnabled(this.jTNome, isTrue);
+        ViewHelper.setEnabled(this.jTCPF, isTrue);
+        ViewHelper.setEnabled(this.jtrg, isTrue);
+        ViewHelper.setEnabled(this.jtemail, isTrue);
+        ViewHelper.setEnabled(this.jDCDateBirth, isTrue);
+        ViewHelper.setEnabled(this.jcbStatus, isTrue);
+        
+        
+    }
+
+    @Override
+    protected void cleanComponents(){
+
+        super.cleanComponents();
+        
+        
+        this.jTNome.setText("");
+        this.jTCPF.setText("");
+        this.jtrg.setText("");
+        this.jtemail.setText("");
+        this.jcbStatus.setSelectedIndex(0);
+        this.jDCDateBirth.setDate(null);
+        
+    }
+    
+    @Override
+    protected void captureScreenData()
+    {
+        //nome, cpf, rg, dataNascimento, email, status);
+        this.inputData = VOHelper.createProfessorVO(
+            this.jTNome.getText(),
+            this.jTCPF.getText(),
+            this.jtrg.getText(),
+            this.jDCDateBirth.getDate(),
+            this.jtemail.getText(),
+            this.jcbStatus.getSelectedItem().toString()
+        );
+    }
+    
+    @Override
+    protected void setDataOnScreen()
+    {
+        
+        this.jTNome.setText(  ((Professor)  this.selectedData).getNome() );
+        this.jTCPF.setText( ((Professor)  this.selectedData).getCpf() );
+        this.jtrg.setText( ((Professor)  this.selectedData).getRg() );
+        this.jtemail.setText( ((Professor)  this.selectedData).getEmail() );
+        this.jcbStatus.setSelectedIndex( (((Professor)  this.selectedData).isStatus())? 1: 0 );
+        this.jDCDateBirth.setDate( ((Professor)  this.selectedData).getDataNascimento() );
+        
+        
+    }
+    
+    @Override
+    protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {
+
+        int selectedIndex = this.jTBSearch.getSelectedRow();
+        this.selectedData = (Professor) this.listObjects.get(selectedIndex);
+        
+        super.jTBSearchMouseClicked(evt);
     }
 
     /**
@@ -73,265 +119,142 @@ public class FormProfessores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPManter = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jlnome = new javax.swing.JLabel();
-        jtnome = new javax.swing.JTextField();
         jldnasc = new javax.swing.JLabel();
-        jtrg = new javax.swing.JTextField();
-        jlrg = new javax.swing.JLabel();
-        jlcpf = new javax.swing.JLabel();
-        jtcpf = new javax.swing.JTextField();
         jlemail = new javax.swing.JLabel();
-        jtemail = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableProfessors = new javax.swing.JTable();
-        jbCadastrar = new javax.swing.JToggleButton();
-        jbAlterar = new javax.swing.JToggleButton();
-        jDateBirth = new com.toedter.calendar.JDateChooser();
-        jbDeletar = new javax.swing.JButton();
-        jcbStatus = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jcbStatus = new javax.swing.JComboBox<>();
+        jtemail = new javax.swing.JTextField();
+        jDCDateBirth = new com.toedter.calendar.JDateChooser();
+        jTNome = new javax.swing.JTextField();
+        jlcpf = new javax.swing.JLabel();
+        jTCPF = new javax.swing.JTextField();
+        jlrg = new javax.swing.JLabel();
+        jtrg = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Professor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         jlnome.setText("Nome:");
 
         jldnasc.setText("Data de Nascimento:");
 
-        jlrg.setText("RG:");
-
-        jlcpf.setText("CPF:");
-
-        jtcpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtcpfActionPerformed(evt);
-            }
-        });
-
         jlemail.setText("E-mail:");
-
-        jTableProfessors.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Data de Nascimento", "CPF", "RG", "E-mail"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableProfessors.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableProfessorsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableProfessors);
-
-        jbCadastrar.setText("Cadastrar");
-        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCadastrarActionPerformed(evt);
-            }
-        });
-
-        jbAlterar.setText("Alterar");
-        jbAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAlterarActionPerformed(evt);
-            }
-        });
-
-        jDateBirth.setDateFormatString("dd/MM/yyyy");
-
-        jbDeletar.setText("Deletar");
-        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbDeletarActionPerformed(evt);
-            }
-        });
-
-        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Inativo", "Ativo" }));
 
         jLabel1.setText("Status:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jlcpf, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtcpf))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jlnome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jldnasc)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlrg)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtrg))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbDeletar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlemail, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+        jcbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Inativo", "Ativo" }));
+
+        jDCDateBirth.setDateFormatString("dd/MM/yyyy");
+
+        jlcpf.setText("CPF:");
+
+        jTCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTCPFActionPerformed(evt);
+            }
+        });
+
+        jlrg.setText("RG:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(18, Short.MAX_VALUE)
+                        .addComponent(jlcpf, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(164, 164, 164)
+                        .addComponent(jlrg)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbAlterar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbCadastrar)
-                                .addGap(20, 20, 20))
-                            .addComponent(jtemail))))
+                        .addComponent(jtrg, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jldnasc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDCDateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jlnome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTNome)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel1)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jlemail, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtemail)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jlnome, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlnome, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlcpf, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlrg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jldnasc, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlcpf, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtcpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jlrg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jDCDateBirth, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlemail, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCadastrar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jbAlterar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbDeletar)
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout jPManterLayout = new javax.swing.GroupLayout(jPManter);
+        jPManter.setLayout(jPManterLayout);
+        jPManterLayout.setHorizontalGroup(
+            jPManterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPManterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPManterLayout.setVerticalGroup(
+            jPManterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPManterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPManter, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtcpfActionPerformed
+    private void jTCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtcpfActionPerformed
+    }//GEN-LAST:event_jTCPFActionPerformed
 
-    private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        if(selectedProfessor != null){
-            selectedProfessor.setCpf(jtcpf.getText());
-            selectedProfessor.setRg(jtrg.getText());
-            selectedProfessor.setNome(jtnome.getText());
-            selectedProfessor.setEmail(jtemail.getText());
-            selectedProfessor.setDataNascimento(jDateBirth.getDate());
-            selectedProfessor.setStatus(  selectedProfessor.isStatusBoolean( jcbStatus.getSelectedItem().toString() )  );
-            
-            showMessage(professorController.updateProfessor(selectedProfessor), "update");
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbAlterarActionPerformed
-
-    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        Professor professor = VOHelper.createProfessorVO(jtnome.getText(),
-                jtcpf.getText(),
-                jtrg.getText(),
-                jDateBirth.getDate(),
-                jtemail.getText(),
-                jcbStatus.getSelectedItem().toString());
-        
-        showMessage(professorController.registryProfessor(professor), "insert");
-    }//GEN-LAST:event_jbCadastrarActionPerformed
-
-    private void jTableProfessorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProfessorsMouseClicked
-        
-        int selection = jTableProfessors.getSelectedRow();
-        this.selectedProfessor = this.professors.get(selection);
-
-        jtcpf.setText(selectedProfessor.getCpf());
-        jtrg.setText(selectedProfessor.getRg());
-        jDateBirth.setDate(selectedProfessor.getDataNascimento());
-        jtnome.setText(selectedProfessor.getNome());
-        jtemail.setText(selectedProfessor.getEmail());
-        jcbStatus.setSelectedItem(selectedProfessor.isStatusString());
-        
-    }//GEN-LAST:event_jTableProfessorsMouseClicked
-
-    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
-        
-        /*
-        if(selectedProfessor != null){
-            showMessage(professorController.removeProfessor((int) selectedProfessor.getId_professor()), "remove");
-        }
-        */
-        this.selectedProfessor.setStatus( false );
-        showMessage(professorController.updateProfessor(selectedProfessor), "remove");
-        
-    }//GEN-LAST:event_jbDeletarActionPerformed
-
-    private void showMessage(Boolean b, String type) {
-        String title = null, message = null;
-        switch (type) {
-            case "insert":
-                title = "Cadastrar";
-                message = "cadastrado";
-                break;
-            case "update":
-                title = "Alterar";
-                message = "alterado";
-                break;
-            case "remove":
-                title = "Deletar";
-                message = "deletado";
-                break;
-        }
-
-        if (b) {
-            JOptionPane.showMessageDialog(null, "Professor " + message + " com sucesso", title, JOptionPane.INFORMATION_MESSAGE);
-            populateTable();
-        } else {
-            JOptionPane.showConfirmDialog(null, "Professor não " + message, title, JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -363,22 +286,19 @@ public class FormProfessores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser jDateBirth;
+    private com.toedter.calendar.JDateChooser jDCDateBirth;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableProfessors;
-    private javax.swing.JToggleButton jbAlterar;
-    private javax.swing.JToggleButton jbCadastrar;
-    private javax.swing.JButton jbDeletar;
+    private javax.swing.JPanel jPManter;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTCPF;
+    private javax.swing.JTextField jTNome;
     private javax.swing.JComboBox<String> jcbStatus;
     private javax.swing.JLabel jlcpf;
     private javax.swing.JLabel jldnasc;
     private javax.swing.JLabel jlemail;
     private javax.swing.JLabel jlnome;
     private javax.swing.JLabel jlrg;
-    private javax.swing.JTextField jtcpf;
     private javax.swing.JTextField jtemail;
-    private javax.swing.JTextField jtnome;
     private javax.swing.JTextField jtrg;
     // End of variables declaration//GEN-END:variables
 }
