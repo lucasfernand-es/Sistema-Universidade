@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +19,10 @@ import javax.persistence.Id;
  */
 @Entity
 public class Disciplina extends ValueObject implements Serializable {
+
+    @OneToMany(mappedBy = "disciplina")
+    private List<Turma> turmas;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -126,13 +131,33 @@ public class Disciplina extends ValueObject implements Serializable {
 
     @Override
     public long getId() {
-        return this.id_disciplina;
+        return this.getId_disciplina();
     }
 
     @Override
     public void setId(long id) {
-        this.id_disciplina = id;
+        this.setId_disciplina(id);
     }
 
+    
+    @Override
+    public String toString()
+    {
+        return this.getNome() + " - " + this.getPeriodo() + " Período";
+    }
+
+    /**
+     * @return the turmas
+     */
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    /**
+     * @param turmas the turmas to set
+     */
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
 
 }

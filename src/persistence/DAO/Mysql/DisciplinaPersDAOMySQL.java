@@ -21,7 +21,7 @@ public class DisciplinaPersDAOMySQL extends BasePersDAOMySQL implements Discipli
         public List search(ValueObject vo)
         {
             String query = "";
-            if(vo.getClass().isInstance( new Aluno_Disciplina() ))
+            if(vo.getClass().isInstance( new Matricula() ))
             {
                 query = "SQL qualquer";
             }

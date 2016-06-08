@@ -5,12 +5,15 @@
  */
 package persistence.DAO.Mysql;
 
-import persistence.DAO.Aluno_DisciplinaPersDAO;
+
+import persistence.DAO.MatriculaPersDAO;
 
 /**
  *
  * @author viniciuscustodio
  */
-public class Aluno_DisciplinaPersDAOMySQL implements Aluno_DisciplinaPersDAO {
+public class MatriculaPersDAOMySQL extends BasePersDAOMySQL implements MatriculaPersDAO{
     
+    
+
 }

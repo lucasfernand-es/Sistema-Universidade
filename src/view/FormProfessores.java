@@ -7,7 +7,7 @@ package view;
 
 import VO.*;
 import controller.*;
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +37,7 @@ public class FormProfessores extends FormTemplate {
 
     public FormProfessores() {
         
-        super(); 
-        super.typeData = PROFESSOR;
+        super(PROFESSOR); 
         initComponents();
         this.classController = new ProfessorController();
  
@@ -101,14 +100,6 @@ public class FormProfessores extends FormTemplate {
         
     }
     
-    @Override
-    protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {
-
-        int selectedIndex = this.jTBSearch.getSelectedRow();
-        this.selectedData = (Professor) this.listObjects.get(selectedIndex);
-        
-        super.jTBSearchMouseClicked(evt);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.

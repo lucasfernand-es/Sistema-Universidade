@@ -6,7 +6,7 @@
 package controller;
 
 import VO.Professor;
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
 import java.util.List;
 
 /**

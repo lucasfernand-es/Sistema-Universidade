@@ -5,17 +5,17 @@
  */
 package controller;
 
-import static controller.Util.TypeData.TURMA;
+import static controller.Util.TypeData.MATRICULA;
 
 /**
  *
  * @author lucasfernandes
  */
-public class TurmaController extends BaseController{
+public class MatriculaController extends BaseController{
     
-    public TurmaController()
+    public MatriculaController()
     {
-        super(TURMA);
+        super(MATRICULA);
     }
 
 }

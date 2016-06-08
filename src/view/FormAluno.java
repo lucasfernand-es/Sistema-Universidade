@@ -8,7 +8,7 @@ package view;
 import VO.Aluno;
 import VO.VOHelper;
 import controller.AlunoController;
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
 
 /**
  *
@@ -23,8 +23,7 @@ public class FormAluno extends FormTemplate {
     public FormAluno() {
         
         
-        super(); 
-        super.typeData = ALUNO;
+        super(ALUNO);
         initComponents();
         this.classController = new AlunoController();
  
@@ -49,7 +48,7 @@ public class FormAluno extends FormTemplate {
     }
 
     @Override
-    protected void cleanComponents(){
+    public void cleanComponents(){
 
         super.cleanComponents();
         
@@ -98,14 +97,6 @@ public class FormAluno extends FormTemplate {
         
     }
     
-    @Override
-    protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {
-
-        int selectedIndex = this.jTBSearch.getSelectedRow();
-        this.selectedData = (Aluno) this.listObjects.get(selectedIndex);
-        
-        super.jTBSearchMouseClicked(evt);
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

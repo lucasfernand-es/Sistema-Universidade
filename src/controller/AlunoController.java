@@ -6,10 +6,12 @@
 package controller;
 
 import VO.Aluno;
-import VO.ValueObject;
-import static controller.TypeData.*;
+import VO.Disciplina;
+import VO.Matricula;
+import VO.Turma;
+import static controller.Util.TypeData.*;
+import java.util.ArrayList;
 import java.util.List;
-import persistence.DAO.AlunoPersDAO;
 
 /**
  *
@@ -21,13 +23,38 @@ public class AlunoController extends BaseController {
     {
         super(ALUNO);
     }
-    
-    public List<ValueObject> searchAluno(Aluno aluno, int type) {
+
+    public List<Disciplina> getDisciplinas(Aluno alunoVO) {
         
-        AlunoPersDAO alunoPersDAO = (AlunoPersDAO) super.getBasePersDAO();
-        
-        return alunoPersDAO.searchAluno(aluno, type);
-        
+        return getDisciplinas(alunoVO, null, -1);
     }
+    
+    private List<Disciplina> getDisciplinas(Aluno alunoVO, String ano_semestre, int type) {
+        List<Disciplina> disciplinas = new ArrayList();
+        
+        for(Matricula matricula: alunoVO.getMatriculas())
+        {
+            Turma turma = matricula.getTurma();
+            switch(type)
+            {
+                case 0:
+                    if(!turma.getAno_semestre().equals(ano_semestre))
+                        continue;
+                    break;
+                default:
+                    break;
+            }
+            
+            disciplinas.add(turma.getDisciplina());
+        }
+        
+        return disciplinas;
+    }
+
+    public List<Disciplina> getDisciplinas(Aluno alunoVO, String ano_semestre) {
+        
+        return (ano_semestre.equals("Selecione..."))? getDisciplinas(alunoVO): getDisciplinas(alunoVO, ano_semestre, 0);
+    }
+    
 
 }

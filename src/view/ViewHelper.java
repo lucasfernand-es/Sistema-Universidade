@@ -5,6 +5,9 @@
  */
 package view;
 
+import controller.Util.TypeDataOperation;
+import controller.Util.TypeData;
+import view.Util.TypeOperation;
 import VO.*;
 import controller.*;
 import java.util.List;
@@ -36,63 +39,35 @@ public class ViewHelper {
     }
     
     private static Object[] createRowArgs(Object valueObject, TypeData type)
-    {
-        Object[] args = null;
-        
+    {//return new Object[]{};
         switch(type)
         {
             case ALUNO:
                 Aluno aluno = (Aluno) valueObject;
-                args = new Object[7];
-                
-                
-                args[0] = (aluno.getRa());
-                args[1] = (aluno.getNome());
-                args[2] = (aluno.getTelefone());
-                args[3] = (aluno.getNome_curso());
-                args[4] = (aluno.getPeriodo());
-                args[5] = (aluno.getTurno());
-                args[6] = (aluno.getCoeficiente());
-                break;
+                return new Object[]{ 
+                    aluno.getRa(), aluno.getNome(), aluno.getTelefone(), aluno.getNome_curso(), 
+                    aluno.getPeriodo(), aluno.getTurno(), aluno.getCoeficiente()};
             case PROFESSOR:
                 Professor professor = (Professor) valueObject;
-                args = new Object[5];
-                
-                
-                args[0] = professor.getNome();
-                args[1] = professor.getDataNascimento();
-                args[2] = professor.getCpf();
-                args[3] = professor.getRg();
-                args[4] = professor.getEmail();
-                
-                break;
+                return new Object[]{ 
+                    professor.getNome(), professor.getDataNascimento(), professor.getCpf(),
+                    professor.getRg(), professor.getEmail()};
             case DISCIPLINA:
                 Disciplina disciplina = (Disciplina) valueObject;
-                args = new Object[4];
-                
-                
-                args[0] = disciplina.getNome();
-                args[1] = disciplina.getPeriodo();
-                args[2] = disciplina.getCarga_horaria();
-                args[3] = disciplina.getEmenta();
-                
-                break;
+                return new Object[]{
+                    disciplina.getNome(), disciplina.getPeriodo(),
+                    disciplina.getCarga_horaria(), disciplina.getEmenta() };
             case TURMA:
                 Turma turma = (Turma) valueObject;
-                args = new Object[3];
-                
-                args[0] = turma.getDisciplina();
-                args[1] = turma.getProfessor();
-                args[2] = turma.getAno_semestre();
-                
-                break;
+                return new Object[]{turma.getDisciplina(), turma.getProfessor(), turma.getAno_semestre()};
+            case MATRICULA:
+                Matricula matricula = (Matricula) valueObject;
+                return new Object[]{matricula.getAluno(), matricula.getTurma(), matricula.getNota()};
             default:
-                break;
+                return null;
                 
         }
-        return args;
     }
-    
     
     
     public static void showMessage(Boolean isSuccess, TypeOperation typeOperation, TypeData type) {
@@ -137,13 +112,14 @@ public class ViewHelper {
         ViewHelper.createTableModel(frame, type);
         frame.updateJTable();
         
-
-        frame.jTBSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+        /*
+        frame.getJTableSearch().addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 frame.jTBSearchMouseClicked(evt);
             }
         });
+        */
 
          /*
         frame.jTFBusca.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -243,6 +219,12 @@ public class ViewHelper {
                     "Disciplina", "Professor", "Semestre/Ano"
                 };
                 break;
+            case MATRICULA:
+                count = 3;
+                titleName = new String[]{
+                    "Aluno", "Turma", "Nota"
+                };
+                break;
                 
             default:
                 titleName = null;
@@ -315,4 +297,5 @@ public class ViewHelper {
     {
         JOptionPane.showMessageDialog(null, message, "ERROR", ERROR_MESSAGE);
     }
+    
 }

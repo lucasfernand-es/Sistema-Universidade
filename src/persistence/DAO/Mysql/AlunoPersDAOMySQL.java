@@ -5,7 +5,10 @@
  */
 package persistence.DAO.Mysql;
 
-import VO.*;
+import VO.Aluno;
+import VO.ValueObject;
+import static controller.Util.TypeData.ALUNO;
+import controller.Util.TypeDataOperation;
 import java.util.List;
 import persistence.DAO.AlunoPersDAO;
 
@@ -16,22 +19,13 @@ import persistence.DAO.AlunoPersDAO;
 public class AlunoPersDAOMySQL extends BasePersDAOMySQL implements AlunoPersDAO {
 
     @Override
-    public List searchAluno(Aluno aluno, int type) {
-        String qString;
-        switch (type) {
-            case 1:
-                qString = "SELECT a FROM Aluno a WHERE a.nome like '%" + aluno.getNome() + "%'";
-                break;
-            case 2:
-                qString = "SELECT a FROM Aluno a WHERE a.nome = '" + aluno.getNome() + "'";
-                break;
-            default:
-                qString = "SELECT a from Aluno a";
-                break;
-        }
+    public List search(ValueObject vo) {
+        Aluno aluno = (Aluno) vo;
+        //select nome from aluno where aluno.nome like '%" + this.tAluno.getText() + "%'"
+        String query = "SELECT a FROM " + TypeDataOperation.getTypeDataBaseString(ALUNO) + " a "
+                + "WHERE a.nome like '%" + aluno.getNome() +"%' ";
+        return this.search(vo.getClass(), query);
         
-        return super.search(Aluno.class, qString);
     }
-
 
 }

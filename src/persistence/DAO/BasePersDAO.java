@@ -7,7 +7,7 @@ package persistence.DAO;
 
 
 import VO.ValueObject;
-import controller.TypeData;
+import controller.Util.TypeData;
 import java.util.List;
 
 /**

@@ -154,11 +154,27 @@ public class Professor extends ValueObject implements Serializable {
 
     @Override
     public long getId() {
-        return this.id_professor;
+        return this.getId_professor();
     }
 
     @Override
     public void setId(long id) {
-        this.id_professor = id; 
+        this.setId_professor(id); 
     }
+
+    /**
+     * @return the turmas
+     */
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    /**
+     * @param turmas the turmas to set
+     */
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
+    
+    
 }

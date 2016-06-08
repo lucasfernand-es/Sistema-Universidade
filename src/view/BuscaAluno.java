@@ -1,14 +1,13 @@
 package view;
 
 
-import VO.Aluno;
-import VO.Aluno_Disciplina;
-import VO.Disciplina;
+import VO.*;
 import controller.AlunoController;
-import controller.DisciplinaController;
+import static controller.Util.TypeData.*;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import view.Util.JComboBoxTypeData;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,11 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class BuscaAluno extends javax.swing.JFrame {
 
+    private final AlunoController alunoController = new AlunoController();
+    private List<ValueObject> alunos = null;
+    private JComboBoxTypeData jComboBoxTypeDataAluno;
+    
+    
     private static BuscaAluno BuscaAluno = null;
     
     private DefaultListModel modelo;
-    
-    private List<Aluno> alunos = null;
 
     /**
      * Creates new form BuscaAluno
@@ -41,9 +43,11 @@ public class BuscaAluno extends javax.swing.JFrame {
     public BuscaAluno() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        jComboBoxTypeDataAluno = new JComboBoxTypeData(this.jCBAluno, ALUNO);
+        
+        
     }
-
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,7 +63,7 @@ public class BuscaAluno extends javax.swing.JFrame {
         tAluno = new javax.swing.JTextField();
         bPesquisar = new javax.swing.JButton();
         lPesquisaSelecionarAluno = new javax.swing.JLabel();
-        cbAluno = new javax.swing.JComboBox();
+        jCBAluno = new javax.swing.JComboBox();
         bLimpar = new javax.swing.JButton();
         lPesquisaAnoSemestre = new javax.swing.JLabel();
         cbAnoSemestre = new javax.swing.JComboBox();
@@ -103,7 +107,7 @@ public class BuscaAluno extends javax.swing.JFrame {
 
         lPesquisaSelecionarAluno.setText("Selecione um Aluno:");
 
-        cbAluno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+        jCBAluno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
 
         bLimpar.setText("Limpar");
         bLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +148,7 @@ public class BuscaAluno extends javax.swing.JFrame {
                         .addComponent(tAluno)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbAluno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCBAluno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pPesquisarLayout.createSequentialGroup()
                         .addComponent(cbAnoSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -167,7 +171,7 @@ public class BuscaAluno extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPesquisaSelecionarAluno)
-                    .addComponent(cbAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pPesquisarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPesquisaAnoSemestre)
@@ -327,20 +331,10 @@ public class BuscaAluno extends javax.swing.JFrame {
         
         
         try{
-            alunos = AlunoController.searchAluno(aluno, 1);
-        
-            cbAluno.removeAllItems();
-
-            for(Aluno alunoVO: alunos)
-            {
-                //System.out.println(alunoVO);
-                cbAluno.addItem(alunoVO.getNome());
-            }
+            jComboBoxTypeDataAluno.populateComboBox((ValueObject) aluno);
         }
         catch (Exception ex) {
-
             JOptionPane.showMessageDialog(null, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-
         }
         
         
@@ -381,37 +375,32 @@ public class BuscaAluno extends javax.swing.JFrame {
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
 
         
-        Aluno_Disciplina aluno_Disciplina = new Aluno_Disciplina();
-        aluno_Disciplina.setAno_semestre( this.cbAnoSemestre.getSelectedItem().toString() );
+        Aluno alunoVO = (Aluno) this.jComboBoxTypeDataAluno.getObject();
         
-        Aluno aluno = new Aluno();
-        aluno.setNome( this.cbAluno.getSelectedItem().toString() );
-        if ( alunos != null ) { // Capturar o RA do aluno 
-            aluno.setRa( alunos.get( this.cbAluno.getSelectedIndex() ).getRa() );
-        }
-        aluno_Disciplina.setAluno(aluno);
+        this.lRAAluno.setText(String.valueOf( alunoVO.getRa() )  );
+        this.lNomeAluno.setText( alunoVO.getNome() );
+        this.lCursoAluno.setText( alunoVO.getNome_curso() );
+        this.lTurnoAluno.setText( alunoVO.getTurno() );
+        this.lSituacaoAluno.setText( alunoVO.getSituacao() );
+        this.lPeriodoAluno.setText(String.valueOf( alunoVO.getPeriodo() ) );
+        this.lCoeficienteAluno.setText(String.valueOf( alunoVO.getCoeficiente() ));
+        
+        
+        
         
         try {
-            List<Disciplina> disciplinas = DisciplinaController.searchDisciplina(aluno_Disciplina);
-        
+            
+            String ano_semestre = this.cbAnoSemestre.getSelectedItem().toString();
+            
+            List<Disciplina> disciplinas = this.alunoController.getDisciplinas(alunoVO, ano_semestre);
+            System.out.println(disciplinas);
+
             modelo.removeAllElements();
-            for(Disciplina disciplinaVO : disciplinas)
-            {
+
+            disciplinas.stream().forEach((disciplinaVO) -> {
                 //System.out.println(disciplinaVO);
                 modelo.addElement(disciplinaVO.getNome());
-            }
-            
-            //List<Aluno> selectAluno = AlunoController.searchAluno(aluno, 2);
-            
-            
-            Aluno alunoVO = alunos.get( this.cbAluno.getSelectedIndex() );
-            this.lRAAluno.setText(String.valueOf( alunoVO.getRa() )  );
-            this.lNomeAluno.setText( alunoVO.getNome() );
-            this.lCursoAluno.setText( alunoVO.getNome_curso() );
-            this.lTurnoAluno.setText( alunoVO.getTurno() );
-            this.lSituacaoAluno.setText( alunoVO.getSituacao() );
-            this.lPeriodoAluno.setText(String.valueOf( alunoVO.getPeriodo() ) );
-            this.lCoeficienteAluno.setText(String.valueOf( alunoVO.getCoeficiente() ));
+            });
             
         }
         catch (Exception ex) {
@@ -479,8 +468,8 @@ public class BuscaAluno extends javax.swing.JFrame {
     private void bLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimparActionPerformed
 
         this.tAluno.setText("");
-        this.cbAluno.removeAllItems();
-        this.cbAluno.addItem("Selecione...");
+        this.jCBAluno.removeAllItems();
+        this.jCBAluno.addItem("Selecione...");
         this.cbAnoSemestre.setSelectedIndex(0);
         this.modelo.removeAllElements();
         
@@ -548,8 +537,8 @@ public class BuscaAluno extends javax.swing.JFrame {
     private javax.swing.JButton bBuscar;
     private javax.swing.JButton bLimpar;
     private javax.swing.JButton bPesquisar;
-    private javax.swing.JComboBox cbAluno;
     private javax.swing.JComboBox cbAnoSemestre;
+    private javax.swing.JComboBox jCBAluno;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lAluno;

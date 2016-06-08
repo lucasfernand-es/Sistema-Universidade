@@ -5,7 +5,7 @@
  */
 package controller;
 
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
 
 
 /**

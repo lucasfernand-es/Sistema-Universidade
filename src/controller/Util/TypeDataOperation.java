@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.Util;
 
 import VO.*;
 
@@ -13,7 +13,7 @@ import VO.*;
  */
 public final class TypeDataOperation {
     
-    public static String getTypeDataString(TypeData typeData)
+    public static String getTypeDataBaseString(TypeData typeData)
     {
         switch(typeData)
         {
@@ -25,10 +25,29 @@ public final class TypeDataOperation {
                 return "Disciplina";
             case TURMA:
                 return "Turma";
+            case MATRICULA:
+                return "Matricula";
         }
         return "";
     }
     
+     public static String getTypeDataString(TypeData typeData)
+    {
+        switch(typeData)
+        {
+            case ALUNO:
+                return "Aluno";
+            case PROFESSOR:
+                return "Professor";
+            case DISCIPLINA:
+                return "Disciplina";
+            case TURMA:
+                return "Turma";
+            case MATRICULA:
+                return "Matrícula";
+        }
+        return "";
+    }
     public static Class getTypeDataClass(TypeData typeData)
     {
         switch(typeData)
@@ -41,8 +60,15 @@ public final class TypeDataOperation {
                 return Disciplina.class;
             case TURMA:
                 return Turma.class;
+            case MATRICULA:
+                return Matricula.class;
             default:
                 return Object.class;
         }
+    }
+    
+    public static boolean isClassOfTypeData(TypeData typeData, ValueObject valueObject)
+    {
+        return getTypeDataClass(typeData) == valueObject.getClass();
     }
 }

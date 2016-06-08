@@ -6,21 +6,27 @@
 
 package view;
 
-import VO.Aluno;
-import VO.ValueObject;
+import VO.*;
 import controller.BaseController;
-import controller.TypeData;
+import controller.Util.*;
+import static controller.Util.TypeData.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import static view.TypeOperation.*;
+import view.Util.JComboBoxTypeData;
+import static view.Util.TypeOperation.*;
 
 /**
  *
  * @author LucasFernandes
  */
 public class FormTemplate extends javax.swing.JFrame {
+    
+    // Lista Especifícas para JComboBox com Objectos
+    
+    protected List<JComboBoxTypeData> listJComboBoxTypeData = new ArrayList();
     
     protected BaseController classController = null;
     protected List<ValueObject> listObjects = null;
@@ -31,20 +37,24 @@ public class FormTemplate extends javax.swing.JFrame {
     
     protected TypeData typeData;
     
+    private boolean flagDeleteItem = false;
+    
     private static FormTemplate manterForm = null;
 
-    public static FormTemplate getForm() {
+    public static FormTemplate getForm(TypeData typeData) {
         if (manterForm == null) {
-            manterForm = new FormTemplate();
+            manterForm = new FormTemplate(typeData);
         }
         return manterForm;
     }
     
-    public FormTemplate() {
+    public FormTemplate(TypeData typeData) {
         initComponents();
+        this.typeData = typeData;
     }
     
-    protected void updateJTable()
+    
+    public void updateJTable()
     {
         updateList();
         updateTable();
@@ -81,8 +91,21 @@ public class FormTemplate extends javax.swing.JFrame {
     
     protected void cleanComponents()
     {
+        this.selectedData = null;
+        
         this.updateJTable(); 
         this.blockComponents();
+        this.updateJComboBox();
+        
+    }
+    
+    protected void updateJComboBox()
+    {   
+        
+        this.listJComboBoxTypeData.stream().forEach((object) -> {
+            object.populateComboBox();
+        });
+    
     }
     
     protected void changeEnable(boolean isTrue){}
@@ -93,6 +116,8 @@ public class FormTemplate extends javax.swing.JFrame {
         ViewHelper.errorMessage( this.getClass() + "captureScreenData");
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -163,15 +188,13 @@ public class FormTemplate extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        /*
         jTBSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTBSearchMouseClicked(evt);
             }
         });
-        */
         jSPTable.setViewportView(jTBSearch);
-        
+
         jLBusca.setText("Busca Rápida");
 
         jLInstrucao.setText("Instruções para a busca");
@@ -217,7 +240,6 @@ public class FormTemplate extends javax.swing.JFrame {
             }
         });
 
-        
         jBTSalvar.setText("Salvar");
         jBTSalvar.setEnabled(false);
         jBTSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +262,7 @@ public class FormTemplate extends javax.swing.JFrame {
                 jBTCadastrarActionPerformed(evt);
             }
         });
-        
+
         jBTConfirmar.setText("Confirmar");
         jBTConfirmar.setEnabled(false);
         jBTConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -384,17 +406,12 @@ public class FormTemplate extends javax.swing.JFrame {
 
             this.cleanComponents();
         }
-        
-        this.jBTConfirmar.setEnabled(false);
-        this.jBTCadastrar.setEnabled(true);
-        this.jBTSalvar.setEnabled(false);
-        this.jBTAlterar.setEnabled(false);
-        this.jBTExcluir.setEnabled(false);
-        this.jBTCancelar.setEnabled(false);
     }//GEN-LAST:event_jBTSalvarActionPerformed
 
+    
     protected void jBTExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTExcluirActionPerformed
-        
+
+            
 
         int confirmOption = JOptionPane.showConfirmDialog(null, "Você realmente deseja excluir estes dados?", "Alerta de exclusão de dados", JOptionPane.YES_NO_OPTION);
                 
@@ -405,7 +422,25 @@ public class FormTemplate extends javax.swing.JFrame {
         if(this.selectedData == null)
             return;
         
-        boolean result = this.classController.delete(this.selectedData);
+        boolean result = false;
+        
+        switch(this.typeData)
+        {
+            case PROFESSOR:
+                Professor professor = (Professor) this.selectedData;
+                professor.setStatus(false);
+                result = this.classController.update( professor );
+                break;
+            case DISCIPLINA:
+                Disciplina disciplina = (Disciplina) this.selectedData;
+                disciplina.setStatus(false);
+                result = this.classController.update( disciplina );
+                break;
+            default:
+                result = this.classController.delete(this.selectedData);
+                break;
+        }
+        
         ViewHelper.showMessage(result , REMOVE, typeData);
         
         if(!result)
@@ -423,6 +458,10 @@ public class FormTemplate extends javax.swing.JFrame {
 
     protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBSearchMouseClicked
    
+        int selectedIndex = this.jTBSearch.getSelectedRow();
+        this.selectedData = this.listObjects.get(selectedIndex);
+        
+        
         setDataOnScreen();
         
         this.jBTConfirmar.setEnabled(false);
@@ -444,6 +483,8 @@ public class FormTemplate extends javax.swing.JFrame {
         this.jBTSalvar.setEnabled(false);
         this.jBTExcluir.setEnabled(false);
         this.jBTCancelar.setEnabled(false);
+        
+        this.cleanComponents();
     }//GEN-LAST:event_jBTCancelarActionPerformed
 
     protected void jTFBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBuscaKeyReleased
@@ -463,6 +504,11 @@ public class FormTemplate extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFBuscaKeyTyped
 
+    
+    public JTable getJTableSearch()
+    {
+        return this.jTBSearch;
+    }
     /**
      * @param args the command line arguments
      */
@@ -470,17 +516,17 @@ public class FormTemplate extends javax.swing.JFrame {
        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new FormTemplate().setVisible(true);
+            new FormTemplate(null).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton jBTAlterar;
-    protected javax.swing.JButton jBTCadastrar;
-    protected javax.swing.JButton jBTCancelar;
-    protected javax.swing.JButton jBTConfirmar;
-    protected javax.swing.JButton jBTExcluir;
-    protected javax.swing.JButton jBTSalvar;
+    public javax.swing.JButton jBTAlterar;
+    public javax.swing.JButton jBTCadastrar;
+    public javax.swing.JButton jBTCancelar;
+    public javax.swing.JButton jBTConfirmar;
+    public javax.swing.JButton jBTExcluir;
+    public javax.swing.JButton jBTSalvar;
     protected javax.swing.JLabel jLBusca;
     protected javax.swing.JLabel jLInstrucao;
     protected javax.swing.JPanel jPBotoes;
@@ -488,7 +534,7 @@ public class FormTemplate extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     protected javax.swing.JScrollPane jSPTable;
     private javax.swing.JSeparator jSeparator1;
-    protected javax.swing.JTable jTBSearch;
+    public javax.swing.JTable jTBSearch;
     protected javax.swing.JTextField jTFBusca;
     // End of variables declaration//GEN-END:variables
 }

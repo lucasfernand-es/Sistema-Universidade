@@ -5,10 +5,12 @@
  */
 package persistence.DAO;
 
+
 /**
  *
- * @author viniciuscustodio
+ * @author lucasfernandes
  */
-public interface Aluno_DisciplinaPersDAO {
+public interface MatriculaPersDAO extends BasePersDAO
+{
     
 }

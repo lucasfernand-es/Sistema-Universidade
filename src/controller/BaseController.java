@@ -6,6 +6,7 @@
 package controller;
 
 
+import controller.Util.TypeData;
 import VO.*;
 import java.util.List;
 import persistence.DAO.BasePersDAO;
@@ -49,6 +50,9 @@ public class BaseController {
             case TURMA:
                 setBasePersDAO(DAOFactory.buscarInstancia().getTurmaPersDAO());
                 break;
+            case MATRICULA:
+                setBasePersDAO(DAOFactory.buscarInstancia().getMatriculaPersDAO());
+                break;
             default:
                 break;
                 
@@ -57,6 +61,12 @@ public class BaseController {
     public List search() {
         
         return getBasePersDAO().search(this.getType());
+    }
+    
+    
+    public List search(ValueObject valueObject) {
+        
+        return getBasePersDAO().search(valueObject);
     }
 
     public boolean registry(ValueObject vo) {

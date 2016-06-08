@@ -17,14 +17,14 @@ public abstract class DAOFactory {
     public static final int MYSQL = 1;
     
     public abstract AlunoPersDAO getAlunoPersDAO();
-    public abstract Aluno_DisciplinaPersDAO getAluno_DisciplinaPersDAO();
     public abstract ProfessorPersDAO getProfessorPersDAO();
     public abstract DisciplinaPersDAO getDisciplinaPersDAO();
     public abstract TurmaPersDAO getTurmaPersDAO();
+    public abstract MatriculaPersDAO getMatriculaPersDAO();
 
-    public static DAOFactory buscarInstancia(int fabrica) {
+    public static DAOFactory getInstance(int factory) {
         
-        switch(fabrica) {
+        switch(factory) {
             
             case MYSQL:
                 return new MysqlDAOFactory();
@@ -38,7 +38,7 @@ public abstract class DAOFactory {
     
     public static DAOFactory buscarInstancia() {
         
-        return buscarInstancia(1);
+        return getInstance(1);
     }    
 
 }

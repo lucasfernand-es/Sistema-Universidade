@@ -7,8 +7,8 @@ package persistence.DAO.Mysql;
 
 
 import VO.*;
-import controller.TypeData;
-import controller.TypeDataOperation;
+import controller.Util.TypeData;
+import controller.Util.TypeDataOperation;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -88,7 +88,6 @@ public class BasePersDAOMySQL implements BasePersDAO {
         EntityManager em = MysqlDAOFactory.getMysqlEntityFactory().createEntityManager();
         TypedQuery q = em.createQuery(query, classType);
         List results = null;
-
         try {
             results = q.getResultList();
         } catch (NoResultException ex) {
@@ -103,7 +102,7 @@ public class BasePersDAOMySQL implements BasePersDAO {
    
     @Override
     public List search(TypeData typeData) {
-        String query = "SELECT x FROM " + TypeDataOperation.getTypeDataString(typeData) + " x";
+        String query = "SELECT x FROM " + TypeDataOperation.getTypeDataBaseString(typeData) + " x";
         
         return this.search( TypeDataOperation.getTypeDataClass(typeData) , query);
     }

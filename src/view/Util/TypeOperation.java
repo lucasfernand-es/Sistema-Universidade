@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package view.Util;
 
 /**
  *
  * @author lucasfernandes
  */
-public enum TypeData {
-    
-    ALUNO,
-    PROFESSOR,
-    DISCIPLINA,
-    TURMA
-    
+public enum TypeOperation {
+    INSERT,
+    UPDATE,
+    REMOVE
 }

@@ -7,7 +7,7 @@ package view;
 
 import VO.*;
 import controller.DisciplinaController;
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
 
 /**
  *
@@ -20,8 +20,7 @@ public class FormDisciplina extends FormTemplate {
      * Creates new form FormAluno
      */
     public FormDisciplina() {
-        super(); 
-        super.typeData = DISCIPLINA;
+        super(DISCIPLINA); 
         initComponents();
         this.classController = new DisciplinaController();
  
@@ -78,16 +77,6 @@ public class FormDisciplina extends FormTemplate {
         
         
     }
-    
-    @Override
-    protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {
-
-        int selectedIndex = this.jTBSearch.getSelectedRow();
-        this.selectedData = (Disciplina) this.listObjects.get(selectedIndex);
-        
-        super.jTBSearchMouseClicked(evt);
-    }
-
     
     
     @SuppressWarnings("unchecked")

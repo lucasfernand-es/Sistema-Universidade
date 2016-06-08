@@ -11,12 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import persistence.DAO.AlunoPersDAO;
-import persistence.DAO.Aluno_DisciplinaPersDAO;
-import persistence.DAO.DAOFactory;
-import persistence.DAO.DisciplinaPersDAO;
-import persistence.DAO.ProfessorPersDAO;
-
 import persistence.DAO.*;
 
 /**
@@ -42,11 +36,6 @@ public class MysqlDAOFactory extends DAOFactory{
     public AlunoPersDAO getAlunoPersDAO() {
         return new AlunoPersDAOMySQL();
     }
-    
-    @Override
-    public Aluno_DisciplinaPersDAO getAluno_DisciplinaPersDAO() {
-        return new Aluno_DisciplinaPersDAOMySQL();
-    }
 
     @Override
     public ProfessorPersDAO getProfessorPersDAO() {
@@ -56,6 +45,17 @@ public class MysqlDAOFactory extends DAOFactory{
     @Override
     public DisciplinaPersDAO getDisciplinaPersDAO() {
         return new DisciplinaPersDAOMySQL();
+    }
+    
+
+    @Override
+    public TurmaPersDAO getTurmaPersDAO() {
+       return new TurmaPersDAOMySQL();
+    }
+
+    @Override
+    public MatriculaPersDAO getMatriculaPersDAO() {
+        return new MatriculaPersDAOMySQL();
     }
     
     public static void closeStatement(Statement s) {
@@ -86,11 +86,6 @@ public class MysqlDAOFactory extends DAOFactory{
         } catch (SQLException e) {
             System.err.println(e);
         }
-    }
-
-    @Override
-    public TurmaPersDAO getTurmaPersDAO() {
-       return new TurmaPersDAOMySQL();
     }
 
     

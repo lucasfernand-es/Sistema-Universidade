@@ -64,4 +64,14 @@ public class VOHelper {
         return turma;
     }
 
+    public static Matricula createMatriculaVO(Aluno aluno, Turma turma, String nota) {
+        Matricula matricula = new Matricula();
+        
+        matricula.setAluno(aluno);
+        matricula.setTurma(turma);
+        matricula.setNota(Double.parseDouble(nota));
+        
+        return matricula;
+    }
+
 }

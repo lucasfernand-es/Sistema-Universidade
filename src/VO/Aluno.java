@@ -7,10 +7,12 @@ package VO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -19,6 +21,10 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Aluno extends ValueObject implements Serializable {
+
+    @OneToMany(mappedBy = "aluno")
+    private List<Matricula> matriculas;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id_aluno;
@@ -177,18 +183,32 @@ public class Aluno extends ValueObject implements Serializable {
 
     @Override
     public long getId() {
-        return this.id_aluno;
+        return this.getId_aluno();
     }
 
     @Override
     public void setId(long id) {
-        this.id_aluno = id;
+        this.setId_aluno(id);
     }
     
     @Override
     public String toString()
     {
-        return this.nome;
+        return this.getNome() + " - " + this.getRa();
+    }
+
+    /**
+     * @return the matriculas
+     */
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    /**
+     * @param matriculas the matriculas to set
+     */
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
     }
 
 }

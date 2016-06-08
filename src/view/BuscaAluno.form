@@ -178,7 +178,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bPesquisar" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="cbAluno" max="32767" attributes="0"/>
+                      <Component id="jCBAluno" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="cbAnoSemestre" min="-2" pref="179" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -207,7 +207,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lPesquisaSelecionarAluno" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbAluno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jCBAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -245,7 +245,7 @@
             <Property name="text" type="java.lang.String" value="Selecione um Aluno:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbAluno">
+        <Component class="javax.swing.JComboBox" name="jCBAluno">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">

@@ -6,11 +6,13 @@
 package VO;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +20,9 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Turma extends ValueObject implements Serializable {
+
+    @OneToMany(mappedBy = "turma")
+    private List<Matricula> matriculas;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +30,7 @@ public class Turma extends ValueObject implements Serializable {
     
     @ManyToOne
     private Professor professor;
+
     @ManyToOne
     private Disciplina disciplina;
     
@@ -88,12 +94,33 @@ public class Turma extends ValueObject implements Serializable {
 
     @Override
     public long getId() {
-        return this.getId_turma();
+        return this.id_turma;
     }
 
     @Override
     public void setId(long id) {
         this.id_turma = id;
+    }
+
+    /**
+     * @return the matriculas
+     */
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    /**
+     * @param matriculas the matriculas to set
+     */
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+    
+    
+    @Override
+    public String toString()
+    {
+        return this.disciplina.getNome() + " - Prof(a):" + this.professor.getNome();
     }
     
 }

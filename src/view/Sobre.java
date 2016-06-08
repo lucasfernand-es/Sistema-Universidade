@@ -59,7 +59,7 @@ public class Sobre extends javax.swing.JDialog {
             }
         });
 
-        lVersaoSistema.setText("Versão 2.0");
+        lVersaoSistema.setText("Versão 2.0 (alpha)");
 
         jLabel5.setText("Lucas Fernandes");
 

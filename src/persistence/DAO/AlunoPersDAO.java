@@ -5,9 +5,6 @@
  */
 package persistence.DAO;
 
-import VO.Aluno;
-import VO.ValueObject;
-import java.util.List;
 
 /**
  *
@@ -16,14 +13,4 @@ import java.util.List;
 public interface AlunoPersDAO extends BasePersDAO
 {
     
-    public abstract List searchAluno(Aluno aluno, int type);
-    /*
-    public abstract List<Aluno> searchAluno();
-
-    public abstract boolean registryAluno(Aluno aluno);
-
-    public abstract boolean updateAluno(Aluno aluno);
-
-    public abstract boolean deleteAluno(Aluno aluno);
-    */
 }

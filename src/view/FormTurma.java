@@ -7,7 +7,8 @@ package view;
 
 import VO.*;
 import controller.TurmaController;
-import static controller.TypeData.*;
+import static controller.Util.TypeData.*;
+import view.Util.JComboBoxTypeData;
 
 /**
  *
@@ -16,23 +17,28 @@ import static controller.TypeData.*;
 public class FormTurma extends FormTemplate {
 
     
-    
-    private List professores = 
-    
     /**
      * Creates new form FormAluno
      */
     public FormTurma() {
         
         
-        super(); 
-        super.typeData = TURMA;
+        super(TURMA); 
         initComponents();
+        
+        
         this.classController = new TurmaController();
  
         ViewHelper.iniciarComponentes(this, this.typeData);
         
+        this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBDisciplina, DISCIPLINA ));
+        this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBProfessor, PROFESSOR ));
+        this.updateJComboBox();
+ 
+        
     }
+    
+   
 
     @Override
     protected void changeEnable(boolean isTrue){
@@ -41,17 +47,14 @@ public class FormTurma extends FormTemplate {
         ViewHelper.setEnabled(this.jCBProfessor, isTrue);
         ViewHelper.setEnabled(this.jCBAnoSemestre, isTrue);
         
-        
     }
 
     @Override
     protected void cleanComponents(){
-
-        super.cleanComponents();
         
-        this.jCBDisciplina.setSelectedIndex(0);
-        this.jCBProfessor.setSelectedIndex(0);
         this.jCBAnoSemestre.setSelectedIndex(0);
+        
+        super.cleanComponents();
         
     }
     
@@ -59,9 +62,9 @@ public class FormTurma extends FormTemplate {
     protected void captureScreenData()
     {
         this.inputData = VOHelper.createTurmaVO(
-            (Disciplina) this.jCBDisciplina.getSelectedItem(),
-            (Professor) this.jCBProfessor.getSelectedItem(),
-            this.jCBAnoSemestre.getSelectedItem().toString()
+                (Disciplina) (JComboBoxTypeData.getJComboBox(this.listJComboBoxTypeData, DISCIPLINA)).getSelectedItem() ,
+                (Professor) (JComboBoxTypeData.getJComboBox(this.listJComboBoxTypeData, PROFESSOR)).getSelectedItem() ,
+                this.jCBAnoSemestre.getSelectedItem().toString()
         );
         
     }
@@ -70,29 +73,13 @@ public class FormTurma extends FormTemplate {
     @Override
     protected void setDataOnScreen()
     {
-        this.jCBDisciplina.setSelectedItem();
-        this.jCBProfessor.setSelectedItem();
-        this.jCBAnoSemestre.setSelectedItem( ((Turma) this.selectedData ).getAno_semestre() );
+        Turma turma = ((Turma)this.selectedData);
         
-        this.jtAcademicRegistry.setText( String.valueOf( ( (Aluno) this.selectedData).getRa() ) );
-        this.jtfCoeficiente.setText( String.valueOf( ( (Aluno) this.selectedData).getCoeficiente()) );
-        this.jtNome.setText( ( (Aluno) this.selectedData).getNome() );
-        this.jtTelefone.setText( ( (Aluno) this.selectedData).getTelefone() );
-        this.jcbCurso.setSelectedItem( ( (Aluno) this.selectedData).getNome_curso() );
-        this.jcbPeriodo.setSelectedItem( String.valueOf( ( (Aluno) this.selectedData).getPeriodo() )  );
-        this.jcbSituacao.setSelectedItem(  String.valueOf( ( (Aluno) this.selectedData).getSituacao() ) );
-        this.jcbTurno.setSelectedItem( String.valueOf( ( (Aluno) this.selectedData).getTurno()) );
-        this.jDPDateIngresso.setDate( ( (Aluno) this.selectedData).getIngresso() );
+        JComboBoxTypeData.setItem(listJComboBoxTypeData, DISCIPLINA, turma.getDisciplina());
+        JComboBoxTypeData.setItem(listJComboBoxTypeData, PROFESSOR, turma.getProfessor());
         
-    }
-    
-    @Override
-    protected void jTBSearchMouseClicked(java.awt.event.MouseEvent evt) {
-
-        int selectedIndex = this.jTBSearch.getSelectedRow();
-        this.selectedData = (Aluno) this.listObjects.get(selectedIndex);
+        this.jCBAnoSemestre.setSelectedItem( turma.getAno_semestre() );
         
-        super.jTBSearchMouseClicked(evt);
     }
     
     @SuppressWarnings("unchecked")
@@ -142,8 +129,8 @@ public class FormTurma extends FormTemplate {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCBProfessor, 0, 239, Short.MAX_VALUE)
-                .addGap(35, 35, 35))
+                .addComponent(jCBProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPAlunoLayout.setVerticalGroup(
             jPAlunoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,15 +152,11 @@ public class FormTurma extends FormTemplate {
         jPManter.setLayout(jPManterLayout);
         jPManterLayout.setHorizontalGroup(
             jPManterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPManterLayout.createSequentialGroup()
-                .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPManterLayout.setVerticalGroup(
             jPManterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPManterLayout.createSequentialGroup()
-                .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getContentPane().add(jPManter, java.awt.BorderLayout.CENTER);
