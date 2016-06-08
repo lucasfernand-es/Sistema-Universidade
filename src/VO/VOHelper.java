@@ -53,5 +53,15 @@ public class VOHelper {
         
         return disciplina;
     }
+    
+    public static Turma createTurmaVO(Disciplina disciplina, Professor professor, String ano_semestre) {
+        Turma turma = new Turma();
+        
+        turma.setDisciplina(disciplina);
+        turma.setProfessor(professor);
+        turma.setSemestre_ano(ano_semestre);
+        
+        return turma;
+    }
 
 }

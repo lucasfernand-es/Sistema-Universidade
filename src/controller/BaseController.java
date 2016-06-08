@@ -46,6 +46,9 @@ public class BaseController {
             case DISCIPLINA:
                 setBasePersDAO(DAOFactory.buscarInstancia().getDisciplinaPersDAO());
                 break;
+            case TURMA:
+                setBasePersDAO(DAOFactory.buscarInstancia().getTurmaPersDAO());
+                break;
             default:
                 break;
                 

@@ -5,8 +5,7 @@
  */
 package persistence.DAO.Mysql;
 
-import VO.Aluno_Turma;
-import VO.ValueObject;
+import VO.*;
 import java.util.List;
 import persistence.DAO.DisciplinaPersDAO;
 
@@ -22,7 +21,7 @@ public class DisciplinaPersDAOMySQL extends BasePersDAOMySQL implements Discipli
         public List search(ValueObject vo)
         {
             String query = "";
-            if(vo.getClass().isInstance( new Aluno_Turma() ))
+            if(vo.getClass().isInstance( new Aluno_Disciplina() ))
             {
                 query = "SQL qualquer";
             }

@@ -14,7 +14,7 @@ import persistence.DAO.Mysql.MysqlDAOFactory;
  */
 public abstract class DAOFactory {
     
-    public static final int mysql = 1;
+    public static final int MYSQL = 1;
     
     public abstract AlunoPersDAO getAlunoPersDAO();
     public abstract Aluno_DisciplinaPersDAO getAluno_DisciplinaPersDAO();
@@ -26,7 +26,7 @@ public abstract class DAOFactory {
         
         switch(fabrica) {
             
-            case mysql:
+            case MYSQL:
                 return new MysqlDAOFactory();
             
             default:

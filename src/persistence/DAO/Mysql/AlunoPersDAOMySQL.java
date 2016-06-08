@@ -5,8 +5,7 @@
  */
 package persistence.DAO.Mysql;
 
-import VO.Aluno;
-import VO.ValueObject;
+import VO.*;
 import java.util.List;
 import persistence.DAO.AlunoPersDAO;
 

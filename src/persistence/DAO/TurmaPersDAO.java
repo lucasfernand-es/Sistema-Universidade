@@ -8,9 +8,9 @@ package persistence.DAO;
 
 /**
  *
- * @author viniciuscustodio
+ * @author lucasfernandes
  */
-public interface ProfessorPersDAO extends BasePersDAO{
+public interface TurmaPersDAO extends BasePersDAO{
 
     
 }

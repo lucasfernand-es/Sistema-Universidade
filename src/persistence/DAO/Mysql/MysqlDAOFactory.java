@@ -26,7 +26,7 @@ import persistence.DAO.*;
 public class MysqlDAOFactory extends DAOFactory{
 
     
-    private static final EntityManagerFactory emf
+    private static final EntityManagerFactory EMF
             = Persistence.createEntityManagerFactory("MySQLUniversity");
     
     public MysqlDAOFactory()
@@ -35,7 +35,7 @@ public class MysqlDAOFactory extends DAOFactory{
     }
 
     public static EntityManagerFactory getMysqlEntityFactory() {
-        return emf;
+        return EMF;
     }
     
     @Override

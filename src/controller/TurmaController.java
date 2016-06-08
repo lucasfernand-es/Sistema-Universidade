@@ -5,33 +5,17 @@
  */
 package controller;
 
-import VO.Turma;
-import java.util.List;
-import persistence.DAO.DAOFactory;
+import static controller.TypeData.TURMA;
 
 /**
  *
  * @author lucasfernandes
  */
-public class TurmaController {
-
-
-    public List<Turma> searchTurma() {
-     
-        List<Turma> newListTurma = DAOFactory.buscarInstancia().getTurmaPersDAO().searchTurma();        
-        return newListTurma;
-    }
-
-    public Boolean registrarTurma(Turma turma) {
-        return DAOFactory.buscarInstancia().getTurmaPersDAO().registryTurma(turma);
-    }
-
-    public Boolean deleteTurma(Turma turma) {
-        return DAOFactory.buscarInstancia().getTurmaPersDAO().deleteTurma(turma);
-    }
-
-    public Boolean updateTurma(Turma turma) {
-        return DAOFactory.buscarInstancia().getTurmaPersDAO().updateTurma(turma);
-    }
+public class TurmaController extends BaseController{
     
+    public TurmaController()
+    {
+        super(TURMA);
+    }
+
 }

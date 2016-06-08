@@ -77,6 +77,15 @@ public class ViewHelper {
                 args[3] = disciplina.getEmenta();
                 
                 break;
+            case TURMA:
+                Turma turma = (Turma) valueObject;
+                args = new Object[3];
+                
+                args[0] = turma.getDisciplina();
+                args[1] = turma.getProfessor();
+                args[2] = turma.getAno_semestre();
+                
+                break;
             default:
                 break;
                 
@@ -226,6 +235,12 @@ public class ViewHelper {
                 count = 4;
                 titleName = new String[]{
                     "Nome", "Período", "Carga Horária", "Ementa"
+                };
+                break;
+            case TURMA:
+                count = 3;
+                titleName = new String[]{
+                    "Disciplina", "Professor", "Semestre/Ano"
                 };
                 break;
                 

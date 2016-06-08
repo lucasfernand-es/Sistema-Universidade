@@ -17,7 +17,8 @@ import javax.persistence.ManyToOne;
  * @author lucasfernandes
  */
 @Entity
-public class Turma implements Serializable {
+public class Turma extends ValueObject implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id_turma;
@@ -27,7 +28,7 @@ public class Turma implements Serializable {
     @ManyToOne
     private Disciplina disciplina;
     
-    private String semestre_ano;
+    private String ano_semestre;
 
     /**
      * @return the id_turma
@@ -74,15 +75,25 @@ public class Turma implements Serializable {
     /**
      * @return the semestre_ano
      */
-    public String getSemestre_ano() {
-        return semestre_ano;
+    public String getAno_semestre() {
+        return ano_semestre;
     }
 
     /**
      * @param semestre_ano the semestre_ano to set
      */
-    public void setSemestre_ano(String semestre_ano) {
-        this.semestre_ano = semestre_ano;
+    public void setSemestre_ano(String ano_semestre) {
+        this.ano_semestre = ano_semestre;
+    }
+
+    @Override
+    public long getId() {
+        return this.getId_turma();
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id_turma = id;
     }
     
 }

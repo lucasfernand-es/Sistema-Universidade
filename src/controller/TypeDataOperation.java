@@ -23,6 +23,8 @@ public final class TypeDataOperation {
                 return "Professor";
             case DISCIPLINA:
                 return "Disciplina";
+            case TURMA:
+                return "Turma";
         }
         return "";
     }
