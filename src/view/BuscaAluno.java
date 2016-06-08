@@ -393,7 +393,6 @@ public class BuscaAluno extends javax.swing.JFrame {
             String ano_semestre = this.cbAnoSemestre.getSelectedItem().toString();
             
             List<Disciplina> disciplinas = this.alunoController.getDisciplinas(alunoVO, ano_semestre);
-            System.out.println(disciplinas);
 
             modelo.removeAllElements();
 

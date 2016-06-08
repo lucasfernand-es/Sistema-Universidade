@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Util.ViewDecorator;
 import VO.*;
 import controller.MatriculaController;
 import static controller.Util.TypeData.*;
@@ -29,7 +30,7 @@ public class FormMatricula extends FormTemplate {
         
         this.classController = new MatriculaController();
  
-        ViewHelper.iniciarComponentes(this, this.typeData);
+        ViewDecorator.iniciarComponentes(this, this.typeData);
         
         this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBAluno, ALUNO ));
         this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBTurma, TURMA ));
@@ -42,14 +43,14 @@ public class FormMatricula extends FormTemplate {
     @Override
     protected void changeEnable(boolean isTrue){
         
-        ViewHelper.setEnabled(this.jCBAluno, isTrue);
-        ViewHelper.setEnabled(this.jCBTurma, isTrue);
-        ViewHelper.setEnabled(this.jTFNota, isTrue);
+        ViewDecorator.setEnabled(this.jCBAluno, isTrue);
+        ViewDecorator.setEnabled(this.jCBTurma, isTrue);
+        ViewDecorator.setEnabled(this.jTFNota, isTrue);
         
     }
 
     @Override
-    protected void cleanComponents(){
+    public void cleanComponents(){
         
         super.cleanComponents();
         this.jTFNota.setText("");
@@ -66,7 +67,6 @@ public class FormMatricula extends FormTemplate {
         );
         
     }
-    
    
     @Override
     protected void setDataOnScreen()

@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.Util;
 
 import controller.Util.TypeDataOperation;
 import controller.Util.TypeData;
-import view.Util.TypeOperation;
 import VO.*;
 import controller.*;
 import java.util.List;
 import javax.swing.*;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.table.DefaultTableModel;
+import view.FormTemplate;
 
 /**
  *
  * @author lucasfernandes
  */
-public class ViewHelper {
+public class ViewDecorator {
     
     public static List search(BaseController baseController)
     {
@@ -109,42 +109,8 @@ public class ViewHelper {
         frame.blockComponents();
         frame.cleanComponents();
         
-        ViewHelper.createTableModel(frame, type);
+        ViewDecorator.createTableModel(frame, type);
         frame.updateJTable();
-        
-        /*
-        frame.getJTableSearch().addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                frame.jTBSearchMouseClicked(evt);
-            }
-        });
-        */
-
-         /*
-        frame.jTFBusca.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                frame.jTFBuscaKeyTyped(evt);
-            }
-            @Override
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                frame.jTFBuscaKeyPressed(evt);
-            }
-            @Override
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                frame.jTFBuscaKeyReleased(evt);
-            }
-        });
-        */
-        
-        
-        //ViewHelper.createActionListener("Alterar", frame.jBTAlterar, frame);
-        //ViewHelper.createActionListener("Salvar", frame.jBTSalvar, frame);
-        //ViewHelper.createActionListener("Excluir", frame.jBTExcluir, frame);
-        //ViewHelper.createActionListener("Cadastrar", frame.jBTCadastrar, frame);
-        //ViewHelper.createActionListener("Confirmar", frame.jBTConfirmar, frame);
-        //ViewHelper.createActionListener("Cancelar", frame.jBTCancelar, frame);
         
         frame.jBTCadastrar.setEnabled(true);
     }
@@ -185,60 +151,25 @@ public class ViewHelper {
        return list;
     }
     
-    private static void createTableModel(FormTemplate frame, TypeData type)
+    private static void createTableModel(FormTemplate frame, TypeData typeData)
     {
         Object[][] titleNull;
-        String[] titleName;
+        String[] titleList;
         Class[] classTypes;
         boolean[] editableColumns;
         
-        int count = 0;
-        switch(type)
-        {
-            case ALUNO:
-                count = 7;
-                titleName = new String[]{
-                    "RA", "Nome", "Telefone", "Curso", "Periodo", "Turno", "Coeficiente"
-                };
-                break;
-            case PROFESSOR:
-                count = 5;
-                titleName = new String[]{
-                    "Nome", "Data de Nascimento", "CPF", "RG", "E-mail"
-                };
-                break;
-            case DISCIPLINA:
-                count = 4;
-                titleName = new String[]{
-                    "Nome", "Período", "Carga Horária", "Ementa"
-                };
-                break;
-            case TURMA:
-                count = 3;
-                titleName = new String[]{
-                    "Disciplina", "Professor", "Semestre/Ano"
-                };
-                break;
-            case MATRICULA:
-                count = 3;
-                titleName = new String[]{
-                    "Aluno", "Turma", "Nota"
-                };
-                break;
-                
-            default:
-                titleName = null;
-                break;
-        }
         
+        titleList = TypeDataOperation.getAttributesTitleList(typeData);
         
-        titleNull = ViewHelper.nullObject(count);
-        classTypes = classTypes(count);
-        editableColumns = editableTypes(count);
+        int titleListSize = titleList.length;
+        
+        titleNull = ViewDecorator.nullObject(titleListSize);
+        classTypes = classTypes(titleListSize);
+        editableColumns = editableTypes(titleListSize);
                 
         frame.jTBSearch.setModel(new javax.swing.table.DefaultTableModel(
                 titleNull,
-                titleName
+                titleList
         ) {
             // Quatidade de Colunas
             Class[] types = classTypes;
@@ -256,36 +187,6 @@ public class ViewHelper {
             }
         });
     }
-    
-    private static void createActionListener(String buttonName, JButton jButton, FormTemplate frame)
-    {
-        jButton.setText(buttonName);
-        jButton.setEnabled(false);
-        
-        
-        switch(buttonName)
-        {
-            case "Alterar":
-                    jButton.addActionListener( frame :: jBTAlterarActionPerformed );
-                break;
-            case "Salvar":
-                    jButton.addActionListener( frame :: jBTSalvarActionPerformed );
-                break;
-            case "Excluir":
-                    jButton.addActionListener( frame :: jBTExcluirActionPerformed );
-                break;
-            case "Cadastrar":
-                    jButton.addActionListener( frame :: jBTCadastrarActionPerformed );
-                break;
-            case "Confirmar":
-                    jButton.addActionListener( frame :: jBTConfirmarActionPerformed );
-                break;
-            case "Cancelar":
-                    jButton.addActionListener( frame :: jBTCancelarActionPerformed );
-                break;
-        }
-    }
-    
     
     public static void setEnabled(JComponent jComponent, boolean isTrue)
     {

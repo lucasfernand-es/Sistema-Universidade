@@ -71,4 +71,34 @@ public final class TypeDataOperation {
     {
         return getTypeDataClass(typeData) == valueObject.getClass();
     }
+    
+    public static String[] getAttributesTitleList(TypeData typeData)
+    {
+        switch(typeData)
+        {
+            case ALUNO:
+                return new String[]{
+                    "RA", "Nome", "Telefone", "Curso", "Periodo", "Turno", "Coeficiente"
+                };
+            case PROFESSOR:
+                return new String[]{
+                    "Nome", "Data de Nascimento", "CPF", "RG", "E-mail"
+                };
+            case DISCIPLINA:
+                return new String[]{
+                    "Nome", "Período", "Carga Horária", "Ementa"
+                };
+            case TURMA:
+                return new String[]{
+                    "Disciplina", "Professor", "Semestre/Ano"
+                };
+            case MATRICULA:
+                return new String[]{
+                    "Aluno", "Turma", "Nota"
+                };
+                
+            default:
+                return new String[]{};
+        }
+    }
 }

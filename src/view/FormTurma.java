@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Util.ViewDecorator;
 import VO.*;
 import controller.TurmaController;
 import static controller.Util.TypeData.*;
@@ -21,15 +22,14 @@ public class FormTurma extends FormTemplate {
      * Creates new form FormAluno
      */
     public FormTurma() {
-        
-        
+     
         super(TURMA); 
         initComponents();
         
         
         this.classController = new TurmaController();
  
-        ViewHelper.iniciarComponentes(this, this.typeData);
+        ViewDecorator.iniciarComponentes(this, this.typeData);
         
         this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBDisciplina, DISCIPLINA ));
         this.listJComboBoxTypeData.add(new JComboBoxTypeData( this.jCBProfessor, PROFESSOR ));
@@ -43,14 +43,14 @@ public class FormTurma extends FormTemplate {
     @Override
     protected void changeEnable(boolean isTrue){
         
-        ViewHelper.setEnabled(this.jCBDisciplina, isTrue);
-        ViewHelper.setEnabled(this.jCBProfessor, isTrue);
-        ViewHelper.setEnabled(this.jCBAnoSemestre, isTrue);
+        ViewDecorator.setEnabled(this.jCBDisciplina, isTrue);
+        ViewDecorator.setEnabled(this.jCBProfessor, isTrue);
+        ViewDecorator.setEnabled(this.jCBAnoSemestre, isTrue);
         
     }
 
     @Override
-    protected void cleanComponents(){
+    public void cleanComponents(){
         
         this.jCBAnoSemestre.setSelectedIndex(0);
         

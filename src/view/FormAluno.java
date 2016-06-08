@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Util.ViewDecorator;
 import VO.Aluno;
 import VO.VOHelper;
 import controller.AlunoController;
@@ -27,22 +28,22 @@ public class FormAluno extends FormTemplate {
         initComponents();
         this.classController = new AlunoController();
  
-        ViewHelper.iniciarComponentes(this, this.typeData);
+        ViewDecorator.iniciarComponentes(this, this.typeData);
         
     }
 
     @Override
     protected void changeEnable(boolean isTrue){
         
-        ViewHelper.setEnabled(this.jtAcademicRegistry, isTrue);
-        ViewHelper.setEnabled(this.jtfCoeficiente, isTrue);
-        ViewHelper.setEnabled(this.jtNome, isTrue);
-        ViewHelper.setEnabled(this.jtTelefone, isTrue);
-        ViewHelper.setEnabled(this.jcbCurso, isTrue);
-        ViewHelper.setEnabled(this.jcbPeriodo, isTrue);
-        ViewHelper.setEnabled(this.jcbSituacao, isTrue);
-        ViewHelper.setEnabled(this.jcbTurno, isTrue);
-        ViewHelper.setEnabled(this.jDPDateIngresso, isTrue);
+        ViewDecorator.setEnabled(this.jtAcademicRegistry, isTrue);
+        ViewDecorator.setEnabled(this.jtfCoeficiente, isTrue);
+        ViewDecorator.setEnabled(this.jtNome, isTrue);
+        ViewDecorator.setEnabled(this.jtTelefone, isTrue);
+        ViewDecorator.setEnabled(this.jcbCurso, isTrue);
+        ViewDecorator.setEnabled(this.jcbPeriodo, isTrue);
+        ViewDecorator.setEnabled(this.jcbSituacao, isTrue);
+        ViewDecorator.setEnabled(this.jcbTurno, isTrue);
+        ViewDecorator.setEnabled(this.jDPDateIngresso, isTrue);
         
         
     }

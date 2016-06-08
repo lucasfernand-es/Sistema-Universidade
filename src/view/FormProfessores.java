@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Util.ViewDecorator;
 import VO.*;
 import controller.*;
 import static controller.Util.TypeData.*;
@@ -41,24 +42,24 @@ public class FormProfessores extends FormTemplate {
         initComponents();
         this.classController = new ProfessorController();
  
-        ViewHelper.iniciarComponentes(this, this.typeData);
+        ViewDecorator.iniciarComponentes(this, this.typeData);
     }
     
     @Override
     protected void changeEnable(boolean isTrue){
         
-        ViewHelper.setEnabled(this.jTNome, isTrue);
-        ViewHelper.setEnabled(this.jTCPF, isTrue);
-        ViewHelper.setEnabled(this.jtrg, isTrue);
-        ViewHelper.setEnabled(this.jtemail, isTrue);
-        ViewHelper.setEnabled(this.jDCDateBirth, isTrue);
-        ViewHelper.setEnabled(this.jcbStatus, isTrue);
+        ViewDecorator.setEnabled(this.jTNome, isTrue);
+        ViewDecorator.setEnabled(this.jTCPF, isTrue);
+        ViewDecorator.setEnabled(this.jtrg, isTrue);
+        ViewDecorator.setEnabled(this.jtemail, isTrue);
+        ViewDecorator.setEnabled(this.jDCDateBirth, isTrue);
+        ViewDecorator.setEnabled(this.jcbStatus, isTrue);
         
         
     }
 
     @Override
-    protected void cleanComponents(){
+    public void cleanComponents(){
 
         super.cleanComponents();
         
