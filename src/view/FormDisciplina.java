@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.Util.ViewDecorator;
 import VO.*;
 import controller.DisciplinaController;
 import static controller.Util.TypeData.*;
@@ -24,23 +25,23 @@ public class FormDisciplina extends FormTemplate {
         initComponents();
         this.classController = new DisciplinaController();
  
-        ViewHelper.iniciarComponentes(this, this.typeData);
+        ViewDecorator.iniciarComponentes(this, this.typeData);
     }
 
     @Override
     protected void changeEnable(boolean isTrue){
         
-        ViewHelper.setEnabled(this.jtNome, isTrue);
-        ViewHelper.setEnabled(this.jcbPeriodo, isTrue);
-        ViewHelper.setEnabled(this.jcbStatus, isTrue);
-        ViewHelper.setEnabled(this.jcbCargaHoraria, isTrue);
-        ViewHelper.setEnabled(this.jTAEmenta, isTrue);
+        ViewDecorator.setEnabled(this.jtNome, isTrue);
+        ViewDecorator.setEnabled(this.jcbPeriodo, isTrue);
+        ViewDecorator.setEnabled(this.jcbStatus, isTrue);
+        ViewDecorator.setEnabled(this.jcbCargaHoraria, isTrue);
+        ViewDecorator.setEnabled(this.jTAEmenta, isTrue);
         
         
     }
 
     @Override
-    protected void cleanComponents(){
+    public void cleanComponents(){
 
         super.cleanComponents();
         

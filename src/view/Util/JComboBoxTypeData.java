@@ -12,7 +12,6 @@ import controller.Util.TypeDataOperation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
-import view.ViewHelper;
 
 /**
  *
@@ -124,7 +123,7 @@ public class JComboBoxTypeData {
         
         if(tempJComboBoxTypeData == null)
         {
-            ViewHelper.errorMessage("Não há jComboBox do tipo" + TypeDataOperation.getTypeDataString(typeData));
+            ViewDecorator.errorMessage("Não há jComboBox do tipo" + TypeDataOperation.getTypeDataString(typeData));
             return;
         }
         

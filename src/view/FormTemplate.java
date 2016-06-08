@@ -6,6 +6,7 @@
 
 package view;
 
+import view.Util.ViewDecorator;
 import VO.*;
 import controller.BaseController;
 import controller.Util.*;
@@ -37,8 +38,6 @@ public class FormTemplate extends javax.swing.JFrame {
     
     protected TypeData typeData;
     
-    private boolean flagDeleteItem = false;
-    
     private static FormTemplate manterForm = null;
 
     public static FormTemplate getForm(TypeData typeData) {
@@ -62,12 +61,12 @@ public class FormTemplate extends javax.swing.JFrame {
     
     protected void updateList()
     {
-        listObjects = ViewHelper.search(classController);
+        listObjects = ViewDecorator.search(classController);
     }
     
     protected void updateTable()
     {
-        ViewHelper.populateTableAll(this.jTBSearch, this.listObjects, this.typeData);
+        ViewDecorator.populateTableAll(this.jTBSearch, this.listObjects, this.typeData);
     }
     
     protected JTextField getjTFBusca() {
@@ -89,7 +88,7 @@ public class FormTemplate extends javax.swing.JFrame {
     }
     
     
-    protected void cleanComponents()
+    public void cleanComponents()
     {
         this.selectedData = null;
         
@@ -113,7 +112,7 @@ public class FormTemplate extends javax.swing.JFrame {
     
     protected void captureScreenData()
     {
-        ViewHelper.errorMessage( this.getClass() + "captureScreenData");
+        ViewDecorator.errorMessage( this.getClass() + "captureScreenData");
     }
 
     
@@ -347,13 +346,13 @@ public class FormTemplate extends javax.swing.JFrame {
         }
         catch(Exception ex)
         {
-            ViewHelper.errorMessage(ex.getMessage());
+            ViewDecorator.errorMessage(ex.getMessage());
             return;
         }
         
         boolean result = this.classController.registry(this.inputData);
         
-        ViewHelper.showMessage( result , INSERT, typeData);
+        ViewDecorator.showMessage( result , INSERT, typeData);
         
         if(result) {
             this.jBTConfirmar.setEnabled(false);
@@ -388,13 +387,13 @@ public class FormTemplate extends javax.swing.JFrame {
         }
         catch(Exception ex)
         {
-            ViewHelper.errorMessage(ex.getMessage());
+            ViewDecorator.errorMessage(ex.getMessage());
             return;
         }
         
         boolean result = this.classController.update(this.inputData);
         
-        ViewHelper.showMessage( result , UPDATE, typeData);
+        ViewDecorator.showMessage( result , UPDATE, typeData);
         
         if(result) {
             this.jBTConfirmar.setEnabled(false);
@@ -441,7 +440,7 @@ public class FormTemplate extends javax.swing.JFrame {
                 break;
         }
         
-        ViewHelper.showMessage(result , REMOVE, typeData);
+        ViewDecorator.showMessage(result , REMOVE, typeData);
         
         if(!result)
             return;

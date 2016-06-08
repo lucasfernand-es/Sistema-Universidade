@@ -15,7 +15,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import persistence.DAO.BasePersDAO;
-import view.ViewHelper;
+import view.Util.ViewDecorator;
 
 /**
  *
@@ -74,7 +74,7 @@ public class BasePersDAOMySQL implements BasePersDAO {
             
             trans.commit();
         } catch (Exception ex) {
-            ViewHelper.errorMessage(ex.getMessage());
+            ViewDecorator.errorMessage(ex.getMessage());
             return false;
         } finally {
             em.close();
